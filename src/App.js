@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import TopBar from "./TopBar";
+import ProfilePage from "./ProfilePage";
+
 import AccountForm from "./accountForm.js";
 
 import firebase from "firebase";
@@ -12,7 +17,9 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header>
+        <TopBar />
+        <ProfilePage />
+        {/* <header>
           <div className="BrandMarker">
             <div>Company Name</div>
             <img alt="Company Logo" />
@@ -31,7 +38,7 @@ function App() {
 
           </div>
 
-        </header>
+        </header> */}
         <Switch>
           <Route exact path="/signin"></Route>
           <Route exact path="/about"></Route>
@@ -42,7 +49,7 @@ function App() {
         <div>CONTENT</div>
 
 
-        {
+        {/* {
           account.appmode &&
           <AccountForm
             Methods={{
@@ -51,7 +58,7 @@ function App() {
             Data={{
               Create: account.create
             }} />
-        }
+        } */}
       </div>
     </Router>
   );
