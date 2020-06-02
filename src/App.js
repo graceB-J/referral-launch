@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import TopBar from "./TopBar";
-import About from "./About.js";
-import ProfilePage from "./ProfilePage";
-import SignInForm from "./SignInForm.js";
-import SignUpForm from "./SignUpForm.js";
+import About from "./about/About.js";
+import ProfilePage from "./profile/ProfilePage";
+import SignInForm from "./auth/SignInForm.js";
+import SignUpForm from "./auth/SignUpForm.js";
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -100,7 +100,7 @@ class App extends React.Component {
             </div>
           }
 
-          <Route><TopBar /></Route>
+          <Route><TopBar user={this.state.user} /></Route>
           <ProfilePage />
           <Switch>
             <Route exact path="/signin"> </Route>
