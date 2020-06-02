@@ -10,4 +10,14 @@
 header {
   position: sticky;
   top: 0;
+  border: 2px solid black;
+}
+
+.BrandMarker {
+  position: absolute;
+  left: 0;
+}
+
+.AccountFormInput > div {
+  margin: 10px;
 }

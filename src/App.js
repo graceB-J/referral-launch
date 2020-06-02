@@ -9,19 +9,25 @@ function App() {
   return (
     <div className="App">
       <header>
-        <div>Company Name</div>
-        <button onClick={() => setAccount("SignIn")}>Sign in </button>
-        <button onClick={() => setAccount("CreateAccount")}>Create Account</button>
+        <div className="BrandMarker">
+          <div>Company Name</div>
+          <img alt="Company Logo" />
+        </div>
+
+        <button onClick={() => setAccount({ appmode: "Account", create: false })}>Sign in </button>
+        <button onClick={() => setAccount({ appmode: "Account", create: true })}>Create Account</button>
       </header>
       <div>CONTENT</div>
 
       {
-        account === "SignIn" &&
-        <AccountForm />
-      }
-      {
-        account === "CreateAccount" &&
-        <AccountForm />
+        account.appmode &&
+        <AccountForm
+          Methods={{
+            Close: () => setAccount(false)
+          }}
+          Data={{
+            Create: account.create
+          }} />
       }
     </div>
   );
