@@ -1,0 +1,17 @@
+.AccountForm {
+    height: 100%;
+    width: 100%;
+    background-color: #44444444;
+
+    position: fixed;
+    top: 0;
+}
+
+.AccountForm > form {
+    background-color: #ffffff; /*ThemeColor*/
+    height: 80%;
+    width: 60%;
+    margin: 10vh 20vw;
+
+    border: 2px solid black;
+}

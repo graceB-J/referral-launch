@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
+import AccountForm from "./accountForm.js";
+
 function App() {
+  const [account, setAccount] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <div>Company Name</div>
+        <button onClick={() => setAccount("SignIn")}>Sign in </button>
+        <button onClick={() => setAccount("CreateAccount")}>Create Account</button>
       </header>
+      <div>CONTENT</div>
+
+      {
+        account === "SignIn" &&
+        <AccountForm />
+      }
+      {
+        account === "CreateAccount" &&
+        <AccountForm />
+      }
     </div>
   );
 }
