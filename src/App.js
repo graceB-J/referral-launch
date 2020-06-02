@@ -44,7 +44,7 @@ class App extends React.Component {
     auth.createUserWithEmailAndPassword(email, password);
   }
 
-  login = (email, password) => {
+  signIn = (email, password) => {
     auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -57,7 +57,7 @@ class App extends React.Component {
             <Route
               exact
               path="/signin"
-              render={props => <SignInForm {...props} hasAccount={"TEST"} login={this.login} />}
+              render={props => <SignInForm {...props} hasAccount={"TEST"} signIn={this.signIn} />}
             />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/about" component={About} />
