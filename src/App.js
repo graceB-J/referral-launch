@@ -1,18 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import firebase, { auth, provider } from './firebaseConfig.js';
 
 import TopBar from "./TopBar";
 import About from "./about/About.js";
-import ProfilePage from "./profile/ProfilePage";
 import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
+import Dashboard from './Dashboard.js';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import firebase, { auth, provider } from './firebaseConfig.js';
-import User from './User.js'
-
 
 class App extends React.Component {
   constructor(props) {
@@ -65,7 +62,7 @@ class App extends React.Component {
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/about" component={About} />
             <Route exact path="/faq" />
-            <Route exact path="/dashboard" component={ProfilePage} />
+            <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/" />
           </Switch>
         </div>

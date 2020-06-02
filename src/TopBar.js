@@ -12,9 +12,9 @@ const TopBar = ({ match, user, logout }) => {
       <Navbar.Brand href="/">
         <img
           alt=""
-          src="/logo.svg"
-          width="30"
-          height="30"
+          src="/image.png"
+          width="75"
+          height="55"
           className="d-inline-block align-top"
         />
         <div>ReShoes</div>
@@ -23,9 +23,14 @@ const TopBar = ({ match, user, logout }) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
+          {
+            user &&
+            <Nav.Link herf="/dashboard">Dashboard</Nav.Link>
+          }
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
         </Nav>
+
         {user
           ? <Button
             variant="outline-success"
