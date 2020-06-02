@@ -4,8 +4,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 
-const TopBar = ({ match }) => {
-  console.log(`${match}`);
+const TopBar = ({ match, user }) => {
+  console.log(user);
 
   return (
     <Navbar bg="light" expand="lg">
@@ -26,8 +26,10 @@ const TopBar = ({ match }) => {
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
         </Nav>
-        <Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>
-        <Button variant="outline-success"><Link to={`${match}/signin`}>Sign Up</Link></Button>
+        { user
+          ? "Logged in"
+          : [<Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>,
+            <Button variant="outline-success"><Link to={`${match}/signin`}>Sign Up</Link></Button>]}
       </Navbar.Collapse>
     </Navbar>
   );
