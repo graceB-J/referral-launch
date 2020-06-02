@@ -1,6 +1,7 @@
 import React from "react";
 import "./About.css";
-function About(props) {
+function About({ match }, props) {
+    console.log(match);
     return (
         < div className="aboutus" >
             <div className="head">
