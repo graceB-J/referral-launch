@@ -15,7 +15,8 @@ const SignUpForm = ({ signUp }) => {
             <InputGroup.Prepend>
               <InputGroup.Text>Name</InputGroup.Text>
             </InputGroup.Prepend>
-            <Form.Control id="SignUpFirstName"
+            <Form.Control
+              id="SignUpFirstName"
               type="text"
               placeholder="First name" />
             <Form.Control id="SignUpLastName"
@@ -24,7 +25,8 @@ const SignUpForm = ({ signUp }) => {
           </InputGroup>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
-            <Form.Control id="SignUpUserEmail"
+            <Form.Control
+              id="SignUpUserEmail"
               type="email"
               placeholder="Enter email" />
             <Form.Text className="text-muted">
@@ -33,7 +35,8 @@ const SignUpForm = ({ signUp }) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
-            <Form.Control id="SignUpUserPassword"
+            <Form.Control
+              id="SignUpUserPassword"
               type="password"
               placeholder="Password" />
           </Form.Group>

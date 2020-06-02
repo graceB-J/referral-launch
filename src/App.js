@@ -4,6 +4,7 @@ import firebase, { auth, provider } from './firebaseConfig.js';
 
 import TopBar from "./TopBar";
 import About from "./about/About.js";
+import FAQ from "./about/FAQ.js";
 import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './Dashboard.js';
@@ -38,12 +39,20 @@ class App extends React.Component {
   }
 
   signUp = (email, password) => {
-    auth.createUserWithEmailAndPassword(email, password);
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log(this.props);
+        this.props.history.push("/dashboard");
+      })
   }
 
-  signIn = (email, password) => {
+  signIn = (email, password, formhistory) => {
 
-    auth.signInWithEmailAndPassword(email, password);
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log(this.props);
+        formhistory.push("/dashboard");
+      })
   }
 
   render() {
@@ -62,7 +71,7 @@ class App extends React.Component {
               component={() => { return (<SignUpForm signUp={this.signUp} />) }}
             />
             <Route exact path="/about" component={About} />
-            <Route exact path="/faq" />
+            <Route exact path="/faq" component={FAQ} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/" />
           </Switch>

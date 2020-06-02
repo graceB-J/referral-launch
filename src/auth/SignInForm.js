@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 
 import "./SignForm.css";
 
-export default function SignInForm({ signIn }) {
+export default function SignInForm(props) {
   return (
     <div className="auth-wrapper">
       <div className="auth-inner">
@@ -39,9 +39,11 @@ export default function SignInForm({ signIn }) {
               placeholder="Password" />
           </Form.Group>
           <Button variant="primary" onClick={() => {
-            signIn(
+            console.log(props);
+            props.signIn(
               document.getElementById("SignInEmail").value,
-              document.getElementById("SignInPassword").value
+              document.getElementById("SignInPassword").value,
+              props.history
             )
             console.log(
               document.getElementById("SignInFirstName").value,
