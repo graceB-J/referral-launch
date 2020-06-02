@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import firebase, { auth, provider } from './firebaseConfig.js';
 
 import TopBar from "./TopBar";
-import About from "./About.js";
-import ProfilePage from "./ProfilePage";
-import SignInForm from "./SignInForm.js";
-import SignUpForm from "./SignUpForm.js";
+import About from "./about/About.js";
+import FAQ from "./about/FAQ.js";
+import SignInForm from "./auth/SignInForm.js";
+import SignUpForm from "./auth/SignUpForm.js";
+import Dashboard from './Dashboard.js';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-import firebase, { auth, provider } from './firebaseConfig.js';
-import User from './User.js'
-
 
 class App extends React.Component {
   constructor(props) {
@@ -21,95 +18,63 @@ class App extends React.Component {
     this.state = {
       user: null
     }
-
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-
   }
 
-
   componentDidMount = () => {
-    // 'onAuthStateChanged' is a method we import from
-    // the 'auth' module that allows the Firebase database
-    // to check if the user was already previously authenticated
-    // everytime the browser refreshes, thus making sure the
-    // user is not forcefully logged out
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           user
         });
+      } else {
+        this.setState({
+          user: null,
+        });
       }
-    });
+    })
   }
-
-
 
   logout = () => {
-    // 'signOut' is a function from the 'auth' module
-    // that we imported from Firebase. Set the user's value
-    // back to null
-    auth.signOut()
-      .then(() => {
-        this.setState({
-          user: null
-        });
-      });
+    auth.signOut();
   }
 
-  login = () => {
-    // 'signInWithPopup' is a function from the 'auth' module
-    // that we imported from Firebase. The parameter 'provider' is
-    // the provider we enabled for our database (Google)
-    auth.signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user;
-        this.setState({
-          user
-        });
-      });
+  signUp = (email, password) => {
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log(this.props);
+        this.props.history.push("/dashboard");
+      })
+  }
+
+  signIn = (email, password, formhistory) => {
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log(this.props);
+        formhistory.push("/dashboard");
+      })
   }
 
   render() {
     return (
       <Router>
         <div className="App">
-          <div className="wrapper">
-
-
-            {this.state.user ? // Ternary operator
-              <button onClick={this.logout} id='logout'>Log Out</button>
-              :
-              <button onClick={this.login} id='login'>Login</button>
-            }
-
-          </div>
-
-          {this.state.user ?
-            <div>
-              <h1 id='loginTitle'>Welcome</h1>
-
-              <p>
-                <User />
-              </p>
-
-            </div>
-            :
-            <div className='wrapper'>
-              <h1 id='centerTitle'> Please login </h1>
-            </div>
-          }
-
-          <Route><TopBar /></Route>
-          <ProfilePage />
+          <TopBar user={this.state.user} logout={this.logout} />
           <Switch>
-            <Route exact path="/signin"> </Route>
-            <Route exact path="/about" component={About}></Route>
-            <Route exact path="/faq"></Route>
-            <Route exact path="/dashboard"></Route>
-            <Route exact path="/"></Route>
+            <Route
+              exact
+              path="/signin"
+              render={props => <SignInForm {...props} hasAccount={"TEST"} signIn={this.signIn} />}
+            />
+            <Route
+              exact path="/signup"
+              component={() => { return (<SignUpForm signUp={this.signUp} />) }}
+            />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/faq" component={FAQ} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/" />
           </Switch>
-          <div>CONTENT</div>
         </div>
       </Router>
     )

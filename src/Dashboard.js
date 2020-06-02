@@ -1,32 +1,30 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import firebaseConfig from './firebaseConfig.js';
 
-
-
-class User extends Component {
-    constructor(props){
+class Dashboard extends Component {
+    constructor(props) {
         super(props);
 
         this.state = {
             username: "",
             referralCode: "",
             totalReferrals: 0,
-            users:[]
+            users: []
         }
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit= this.handleSubmit.bind(this);
-       
+        this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
-   
-    handleChange(e){
+
+    handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
         });
     }
 
-    handleSubmit(e){
+    handleSubmit(e) {
         e.preventDefault();
         const dataRef = firebaseConfig.database().ref('users');
         const referrals = {
@@ -38,7 +36,7 @@ class User extends Component {
         this.setState({
             username: "",
             referralCode: "",
-            totalReferrals: 0 
+            totalReferrals: 0
 
 
         });
@@ -53,7 +51,7 @@ class User extends Component {
         userRef.on("value", (snapshot) => {
             let users = snapshot.val();
             let newState = [];
-            for(let refer in users){
+            for (let refer in users) {
                 newState.push({
                     id: refer,
                     username: users[refer].username,
@@ -70,37 +68,37 @@ class User extends Component {
     removeUser(itemId) {
         const useRef = firebaseConfig.database().ref(`/users/${itemId}`);
         useRef.remove();
-      }
+    }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <section>
-                <form onSubmit={this.handleSubmit}>
-                    <input type = "text" name= "username" placeholder = "Name" onChange={this.handleChange} value= {this.state.username}/>
-                    <input type = "text" name= "referralCode" placeholder = "Referral Code" onChange={this.handleChange} value= {this.state.referralCode}/>
-                    <input type = "text" name= "totalReferrals" placeholder = "Total Referrals" onChange={this.handleChange} value= {this.state.totalReferrals}/>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="text" name="username" placeholder="Name" onChange={this.handleChange} value={this.state.username} />
+                        <input type="text" name="referralCode" placeholder="Referral Code" onChange={this.handleChange} value={this.state.referralCode} />
+                        <input type="text" name="totalReferrals" placeholder="Total Referrals" onChange={this.handleChange} value={this.state.totalReferrals} />
 
-                    <button> Submit Information </button>
-                </form>
+                        <button> Submit Information </button>
+                    </form>
                 </section>
-            <section>
-                <div>
-                <ul>
-                    {this.state.users.map((refer) =>{
-                        return(
-                            <li key={refer.id}>
-                            <h3>{refer.username}</h3> 
-                            <p>referralcode: {refer.referralCode}</p><br/>
-                            <p>Number of referrals: {refer.totalReferrals}</p> 
-                            <button onClick={() => this.removeUser(refer.id)}>Remove User</button>
-                    
-                        </li>
-                        )
+                <section>
+                    <div>
+                        <ul>
+                            {this.state.users.map((refer) => {
+                                return (
+                                    <li key={refer.id}>
+                                        <h3>{refer.username}</h3>
+                                        <p>referralcode: {refer.referralCode}</p><br />
+                                        <p>Number of referrals: {refer.totalReferrals}</p>
+                                        <button onClick={() => this.removeUser(refer.id)}>Remove User</button>
 
-                    })}
-                </ul>
-                </div>
+                                    </li>
+                                )
+
+                            })}
+                        </ul>
+                    </div>
                 </section>
 
             </div>
@@ -108,4 +106,4 @@ class User extends Component {
     }
 
 }
-export default User;
+export default Dashboard;

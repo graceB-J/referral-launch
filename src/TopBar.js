@@ -4,17 +4,17 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 
-const TopBar = ({ match }) => {
-  console.log(`${match}`);
+const TopBar = ({ match, user, logout }) => {
+  console.log(user);
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
         <img
           alt=""
-          src="/logo.svg"
-          width="30"
-          height="30"
+          src="/image.png"
+          width="75"
+          height="55"
           className="d-inline-block align-top"
         />
         <div>ReShoes</div>
@@ -23,11 +23,23 @@ const TopBar = ({ match }) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
+          {
+            user &&
+            <Nav.Link herf="/dashboard">Dashboard</Nav.Link>
+          }
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
         </Nav>
-        <Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>
-        <Button variant="outline-success"><Link to={`${match}/signin`}>Sign Up</Link></Button>
+
+        {user
+          ? <Button
+            variant="outline-success"
+            onClick={logout}
+            id='logout'>
+            Log Out
+            </Button>
+          : [<Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>,
+          <Button variant="outline-success"><Link to="/signup">Sign Up</Link></Button>]}
       </Navbar.Collapse>
     </Navbar>
   );
