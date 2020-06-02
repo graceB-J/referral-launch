@@ -28,27 +28,24 @@ class App extends React.Component {
         this.setState({
           user
         });
+      } else {
+        this.setState({
+          user: null,
+        });
       }
-    });
+    })
   }
 
   logout = () => {
-    auth.signOut()
-      .then(() => {
-        this.setState({
-          user: null
-        });
-      });
+    auth.signOut();
   }
 
-  login = () => {
-    auth.signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user;
-        this.setState({
-          user
-        });
-      });
+  signUp = (email, password) => {
+    auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  login = (email, password) => {
+    auth.signInWithEmailAndPassword(email, password);
   }
 
   render() {
