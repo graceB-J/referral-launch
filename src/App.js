@@ -25,27 +25,24 @@ class App extends React.Component {
         this.setState({
           user
         });
+      } else {
+        this.setState({
+          user: null,
+        });
       }
-    });
+    })
   }
 
   logout = () => {
-    auth.signOut()
-      .then(() => {
-        this.setState({
-          user: null
-        });
-      });
+    auth.signOut();
   }
 
-  login = () => {
-    auth.signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user;
-        this.setState({
-          user
-        });
-      });
+  signUp = (email, password) => {
+    auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  signIn = (email, password) => {
+    auth.signInWithEmailAndPassword(email, password);
   }
 
   render() {
@@ -57,7 +54,7 @@ class App extends React.Component {
             <Route
               exact
               path="/signin"
-              render={props => <SignInForm {...props} hasAccount={"TEST"} login={this.login} />}
+              render={props => <SignInForm {...props} hasAccount={"TEST"} signIn={this.signIn} />}
             />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/about" component={About} />
