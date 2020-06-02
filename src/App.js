@@ -20,10 +20,8 @@ class App extends React.Component {
     this.state = {
       user: null
     }
-
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-
   }
 
   componentDidMount = () => {
@@ -60,8 +58,6 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <div className="wrapper">
-
-
             {this.state.user ?
               <button onClick={this.logout} id='logout'>Log Out</button>
               :
@@ -73,10 +69,7 @@ class App extends React.Component {
           {this.state.user ?
             <div>
               <h1 id='loginTitle'>Welcome</h1>
-
-              <p><User />
-              </p>
-
+              <p> <User /> </p>
             </div>
             :
             <div className='wrapper'>
