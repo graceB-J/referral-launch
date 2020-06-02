@@ -6,22 +6,3 @@
   height: 40vmin;
   pointer-events: none;
 }
-
-header {
-  position: sticky;
-  top: 0;
-  border: 2px solid black;
-}
-
-.BrandMarker {
-  position: absolute;
-  left: 0;
-}
-.SignInDisplay {
-  position: absolute;
-  right: 0;
-}
-
-.AccountFormInput > div {
-  margin: 10px;
-}

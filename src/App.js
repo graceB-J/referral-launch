@@ -5,6 +5,8 @@ import firebase from "firebase";
 import TopBar from "./TopBar";
 import About from "./About.js";
 import ProfilePage from "./ProfilePage";
+import SignInForm from "./SignInForm.js";
+import SignUpForm from "./SignUpForm.js";
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

@@ -7,9 +7,8 @@ function About(props) {
                 About Us
             </div>
             <body>
-
+                The journey to making better things in a better way is a long one, and we’re just getting started.
             </body>
-
 
         </div >
     )
