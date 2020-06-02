@@ -21,10 +21,8 @@ class App extends React.Component {
     this.state = {
       user: null
     }
-
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-
   }
 
 
@@ -43,18 +41,16 @@ class App extends React.Component {
     });
   }
 
-
-
   logout = () => {
     // 'signOut' is a function from the 'auth' module
     // that we imported from Firebase. Set the user's value
     // back to null
     auth.signOut()
-      .then(() => {
-        this.setState({
-          user: null
-        });
+    .then(() => {
+      this.setState({
+        user: null
       });
+    });
   }
 
   login = () => {
@@ -62,48 +58,25 @@ class App extends React.Component {
     // that we imported from Firebase. The parameter 'provider' is
     // the provider we enabled for our database (Google)
     auth.signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user;
-        this.setState({
-          user
-        });
+    .then((result) => {
+      const user = result.user;
+      this.setState({
+        user
       });
+    });
   }
 
   render() {
+    const {user} = this.state;
+
     return (
       <Router>
         <div className="App">
-          <div className="wrapper">
-
-
-            {this.state.user ? // Ternary operator
-              <button onClick={this.logout} id='logout'>Log Out</button>
-              :
-              <button onClick={this.login} id='login'>Login</button>
-            }
-
-          </div>
-
-          {this.state.user ?
-            <div>
-              <h1 id='loginTitle'>Welcome</h1>
-
-              <p>
-                <User />
-              </p>
-
-            </div>
-            :
-            <div className='wrapper'>
-              <h1 id='centerTitle'> Please login </h1>
-            </div>
-          }
-
-          <Route><TopBar user={this.state.user} /></Route>
+          <Route><TopBar user={user} logout={this.logout}/></Route>
           <ProfilePage />
           <Switch>
-            <Route exact path="/signin"> </Route>
+            <Route exact path="/signin" component={() => <SignInForm login={this.login}/>}></Route>
+            <Route exact path="/signup" component={SignUpForm}></Route>
             <Route exact path="/about" component={About}></Route>
             <Route exact path="/faq"></Route>
             <Route exact path="/dashboard"></Route>

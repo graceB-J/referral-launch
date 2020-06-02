@@ -8,11 +8,13 @@ import Button from "react-bootstrap/Button";
 
 import "./SignForm.css";
 
-const SignInForm = (props) => {
+const SignInForm = ({login}) => {
   return (
     <div className="auth-wrapper">
       <div className="auth-inner">
         <h1>Sign In</h1>
+        <Button onClick={login} id='login'>Login</Button>
+        <hr />
         <Form>
         <InputGroup className="mb-3">
           <InputGroup.Prepend>
