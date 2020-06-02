@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import './App.css';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import firebase from "firebase";
 
 import TopBar from "./TopBar";
+import About from "./About.js";
 import ProfilePage from "./ProfilePage";
 
-import AccountForm from "./accountForm.js";
-
-import firebase from "firebase";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [account, setAccount] = useState(false);
@@ -17,48 +15,16 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <TopBar />
+        <Route><TopBar /></Route>
         <ProfilePage />
-        {/* <header>
-          <div className="BrandMarker">
-            <div>Company Name</div>
-            <img alt="Company Logo" />
-          </div>
-          <div className="SignInDisplay">
-            {
-              account ?
-                <div>
-                </div>
-                :
-                <div>
-                  <button onClick={() => setAccount({ appmode: "Account", create: false })}>Sign in </button>
-                  <button onClick={() => setAccount({ appmode: "Account", create: true })}>Create Account</button>
-                </div>
-            }
-
-          </div>
-
-        </header> */}
         <Switch>
-          <Route exact path="/signin"></Route>
-          <Route exact path="/about"></Route>
+          <Route exact path="/signin"> </Route>
+          <Route exact path="/about" component={About}></Route>
           <Route exact path="/faq"></Route>
           <Route exact path="/dashboard"></Route>
           <Route exact path="/"></Route>
         </Switch>
         <div>CONTENT</div>
-
-
-        {/* {
-          account.appmode &&
-          <AccountForm
-            Methods={{
-              Close: () => setAccount(false)
-            }}
-            Data={{
-              Create: account.create
-            }} />
-        } */}
       </div>
     </Router>
   );
