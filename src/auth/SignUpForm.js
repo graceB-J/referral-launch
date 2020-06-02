@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
-const SignUpForm = (props) => {
+const SignUpForm = ({ signUp }) => {
   return (
     <div className="auth-wrapper">
       <div className="auth-inner">
@@ -15,16 +15,16 @@ const SignUpForm = (props) => {
             <InputGroup.Prepend>
               <InputGroup.Text>Name</InputGroup.Text>
             </InputGroup.Prepend>
-            <Form.Control
+            <Form.Control id="SignUpFirstName"
               type="text"
               placeholder="First name" />
-            <Form.Control
+            <Form.Control id="SignUpLastName"
               type="text"
               placeholder="Last name" />
           </InputGroup>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
-            <Form.Control
+            <Form.Control id="SignUpUserEmail"
               type="email"
               placeholder="Enter email" />
             <Form.Text className="text-muted">
@@ -33,23 +33,37 @@ const SignUpForm = (props) => {
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
-            <Form.Control
+            <Form.Control id="SignUpUserPassword"
               type="password"
               placeholder="Password" />
           </Form.Group>
           <Form.Group>
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
+            <Form.Control id="SignUpConfirmPassword"
               type="password"
               placeholder="Password" />
           </Form.Group>
           <Form.Group>
             <Form.Label>Referral Code</Form.Label>
-            <Form.Control
+            <Form.Control id="SignUpReferral"
               type="text"
               placeholder="Code" />
           </Form.Group>
-          <Button variant="primary">
+          <Button variant="primary"
+            onClick={() => {
+              signUp(
+                document.getElementById("SignUpUserEmail").value,
+                document.getElementById("SignUpUserPassword").value
+              );
+              console.log(
+                document.getElementById("SignUpFirstName").value,
+                document.getElementById("SignUpLastName").value,
+                document.getElementById("SignUpUserEmail").value,
+                document.getElementById("SignUpUserPassword").value,
+                document.getElementById("SignUpConfirmPassword").value,
+                document.getElementById("SignUpUserEmail").value
+              )
+            }}>
             Submit
           </Button>
         </Form>
