@@ -17,6 +17,10 @@ header {
   position: absolute;
   left: 0;
 }
+.SignInDisplay {
+  position: absolute;
+  right: 0;
+}
 
 .AccountFormInput > div {
   margin: 10px;
