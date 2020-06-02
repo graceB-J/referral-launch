@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import TopBar from "./TopBar";
@@ -9,7 +9,6 @@ import SignUpForm from "./SignUpForm.js";
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 import firebase, { auth, provider } from './firebaseConfig.js';
 import User from './User.js'
@@ -27,13 +26,7 @@ class App extends React.Component {
 
   }
 
-
   componentDidMount = () => {
-    // 'onAuthStateChanged' is a method we import from
-    // the 'auth' module that allows the Firebase database
-    // to check if the user was already previously authenticated
-    // everytime the browser refreshes, thus making sure the
-    // user is not forcefully logged out
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({
@@ -43,12 +36,7 @@ class App extends React.Component {
     });
   }
 
-
-
   logout = () => {
-    // 'signOut' is a function from the 'auth' module
-    // that we imported from Firebase. Set the user's value
-    // back to null
     auth.signOut()
       .then(() => {
         this.setState({
@@ -58,9 +46,6 @@ class App extends React.Component {
   }
 
   login = () => {
-    // 'signInWithPopup' is a function from the 'auth' module
-    // that we imported from Firebase. The parameter 'provider' is
-    // the provider we enabled for our database (Google)
     auth.signInWithPopup(provider)
       .then((result) => {
         const user = result.user;
@@ -77,7 +62,7 @@ class App extends React.Component {
           <div className="wrapper">
 
 
-            {this.state.user ? // Ternary operator
+            {this.state.user ?
               <button onClick={this.logout} id='logout'>Log Out</button>
               :
               <button onClick={this.login} id='login'>Login</button>
@@ -89,8 +74,7 @@ class App extends React.Component {
             <div>
               <h1 id='loginTitle'>Welcome</h1>
 
-              <p>
-                <User />
+              <p><User />
               </p>
 
             </div>
@@ -100,16 +84,19 @@ class App extends React.Component {
             </div>
           }
 
-          <Route><TopBar /></Route>
-          <ProfilePage />
+          <TopBar />
           <Switch>
-            <Route exact path="/signin"> </Route>
-            <Route exact path="/about" component={About}></Route>
-            <Route exact path="/faq"></Route>
-            <Route exact path="/dashboard"></Route>
-            <Route exact path="/"></Route>
+            <Route
+              exact
+              path="/signin"
+              render={props => <SignInForm {...props} hasAccount={"TEST"} />}
+            />
+            <Route exact path="/signup" component={props => SignUpForm} />
+            <Route exact path="/about" component={props => About} />
+            <Route exact path="/faq" />
+            <Route exact path="/dashboard" component={props => ProfilePage} />
+            <Route exact path="/" />
           </Switch>
-          <div>CONTENT</div>
         </div>
       </Router>
     )

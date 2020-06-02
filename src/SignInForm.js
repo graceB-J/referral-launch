@@ -9,22 +9,23 @@ import Button from "react-bootstrap/Button";
 import "./SignForm.css";
 
 const SignInForm = (props) => {
+  console.log(props);
   return (
     <div className="auth-wrapper">
       <div className="auth-inner">
         <h1>Sign In</h1>
         <Form>
-        <InputGroup className="mb-3">
-          <InputGroup.Prepend>
-            <InputGroup.Text>Name</InputGroup.Text>
-          </InputGroup.Prepend>
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+              <InputGroup.Text>Name</InputGroup.Text>
+            </InputGroup.Prepend>
             <Form.Control
               type="text"
               placeholder="First name" />
             <Form.Control
               type="text"
               placeholder="Last name" />
-        </InputGroup>
+          </InputGroup>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control
