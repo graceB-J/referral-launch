@@ -4,10 +4,12 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 
-const TopBar = () => {
+const TopBar = ({ match, user, logout }) => {
+  console.log(user);
+
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
         <img
           alt=""
           src="/logo.svg"
@@ -24,8 +26,15 @@ const TopBar = () => {
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
         </Nav>
-        <Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>
-        <Button variant="outline-success"><Link to="/signup">Sign Up</Link></Button>
+        {user
+          ? <Button
+            variant="outline-success"
+            onClick={logout}
+            id='logout'>
+            Log Out
+            </Button>
+          : [<Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>,
+          <Button variant="outline-success"><Link to="/signup">Sign Up</Link></Button>]}
       </Navbar.Collapse>
     </Navbar>
   );
