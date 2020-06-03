@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+import Container from "react-bootstrap/Container"
+import Button from "react-bootstrap/Button"
+
+import { FaTwitter, FaFacebookF } from 'react-icons/fa';
+
 import firebaseConfig from './../firebaseConfig.js';
 import MilestonesDisplay from "./MilestonesDisplay";
 
@@ -49,53 +54,60 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
-      <section>
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(e.target);
-        }}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Name"
-            onChange={(e) => handleChange(e.target)}
-            value={userInfo.username} />
-          <input
-            type="text"
-            name="referralCode"
-            placeholder="Referral Code"
-            onChange={(e) => handleChange(e.target)}
-            value={userInfo.referralCode} />
-          <input
-            type="text"
-            name="totalReferrals"
-            placeholder="Total Referrals"
-            onChange={(e) => handleChange(e.target)}
-            value={userInfo.totalReferrals} />
-          <button> Submit Information </button>
-        </form>
-      </section>
-      <section>
-        <div>
-          <ul>
-            {users.map((refer) => {
-              return (
-                <li key={refer.id}>
-                  <h3>{refer.username}</h3>
-                  <p>referralcode: {refer.referralCode}</p><br />
-                  <p>Number of referrals: {refer.totalReferrals}</p>
-                  <button onClick={() => removeUser(refer.id)}>Remove User</button>
-
-                </li>
-              )
-
-            })}
-          </ul>
-        </div>
-      </section>
+    <Container>
+      {/* <form onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(e.target);
+      }}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Name"
+          onChange={(e) => handleChange(e.target)}
+          value={userInfo.username} />
+        <input
+          type="text"
+          name="referralCode"
+          placeholder="Referral Code"
+          onChange={(e) => handleChange(e.target)}
+          value={userInfo.referralCode} />
+        <input
+          type="text"
+          name="totalReferrals"
+          placeholder="Total Referrals"
+          onChange={(e) => handleChange(e.target)}
+          value={userInfo.totalReferrals} />
+        <button> Submit Information </button>
+      </form>
+      <ul>
+        {users.map((refer) => {
+          return (
+            <li key={refer.id}>
+              <h3>{refer.username}</h3>
+              <p>referralcode: {refer.referralCode}</p><br />
+              <p>Number of referrals: {refer.totalReferrals}</p>
+              <button onClick={() => removeUser(refer.id)}>Remove User</button>
+            </li>
+          )
+        })}
+      </ul> */}
+      <h3>Your Referral Code</h3>
+      <h1>kyungjin15</h1>
+      <h3>Your Points</h3>
+      <h1>3</h1>
+      <h3>Share us on Twitter and Facebook for extra points</h3>
+      <Button
+        variant="primary"
+        size="lg">
+        <FaTwitter />
+      </Button>
+      <Button
+        variant="primary"
+        size="lg">
+        <FaFacebookF />
+      </Button>
       <MilestonesDisplay />
-    </div>
+    </Container>
   )
 }
 export default Dashboard;
