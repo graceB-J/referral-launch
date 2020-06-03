@@ -7,10 +7,11 @@ import Button from "react-bootstrap/Button"
 import { FaTwitter, FaFacebookF } from 'react-icons/fa';
 
 import firebaseConfig from './../firebaseConfig.js';
+
 import MilestonesDisplay from "./MilestonesDisplay";
 
-const Dashboard = () => {
-  const [userInfo, setUserInfo] = useState({username: "", referralCode: "", totalReferrals: ""});
+const Dashboard = (props) => {
+  const [userInfo, setUserInfo] = useState({ username: "", referralCode: "", totalReferrals: "" });
   const [users, setUsers] = useState([]);
 
   const handleChange = (target) => {
@@ -29,7 +30,7 @@ const Dashboard = () => {
     }
     dataRef.push(referrals);
 
-    setUserInfo({username: "", referralCode: "", totalReferrals: ""});
+    setUserInfo({ username: "", referralCode: "", totalReferrals: "" });
   }
 
   useEffect(() => {

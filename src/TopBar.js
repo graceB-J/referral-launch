@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
+import SocialMediaButton from './profile/TwitterButton.js';
 
-const TopBar = ({ match, user, logout }) => {
-  console.log(user);
-
+export default function TopBar({ match, user, logout }) {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">
@@ -19,16 +18,19 @@ const TopBar = ({ match, user, logout }) => {
         />
         <div>ReShoes</div>
       </Navbar.Brand>
+
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
           {
             user &&
-            <Nav.Link herf="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           }
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
+          <SocialMediaButton url="www.google.com" text="Check it out!"/>
         </Nav>
 
         {user
@@ -44,5 +46,3 @@ const TopBar = ({ match, user, logout }) => {
     </Navbar>
   );
 }
-
-export default TopBar;

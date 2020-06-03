@@ -1,9 +1,7 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
 import "./SignForm.css";
@@ -27,20 +25,13 @@ export default function SignInForm(props) {
               type="password"
               placeholder="Password" />
           </Form.Group>
-          <Button variant="primary" onClick={() => {
-            console.log(props);
+          <Button variant="primary" onClick={() =>
             props.signIn(
               document.getElementById("SignInEmail").value,
               document.getElementById("SignInPassword").value,
-              props.history
+              () => props.history.replace("/signin", "dashboard")
             )
-            console.log(
-              document.getElementById("SignInFirstName").value,
-              document.getElementById("SignInLastName").value,
-              document.getElementById("SignInEmail").value,
-              document.getElementById("SignInPassword").value
-            );
-          }}>
+          }>
             Submit
           </Button>
           <p>No account? <Link to="/signup">Click here to sign up.</Link></p>
