@@ -54,6 +54,12 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
             emailAddress: document.getElementById("signUpEmailAddress").value,
             refereeCode: document.getElementById("refereeCode").value,
             referralCode: code,
+            points: 0,
+            has_shared: {
+              facebook: false,
+              twitter: false,
+              email: false
+            }
           }
         );
 
