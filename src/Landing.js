@@ -10,7 +10,12 @@ function Landing({ match }) {
             <div>
                 <img src="/comingsoon.png" alt="Coming Soon" width="100%" />
             </div>
-
+            <div>
+                <h3>
+                    <a href="/signup" >Sign Up. </a>
+                Share with Friends. Get Rewards.
+                </h3>
+            </div>
         </div>
     )
 
