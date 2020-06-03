@@ -8,20 +8,28 @@ import Button from "react-bootstrap/Button";
 import "./SignForm.css";
 import firebaseConfig from './../firebaseConfig.js';
 
-export default function SignUpForm({ signUp, ...props }) {
+export default function SignUpForm({ signUp, codeGen, ...props }) {
   const query = new URLSearchParams(useLocation().search);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dataRef = firebaseConfig.database().ref('users');
-    let result = {
-      firstName: document.getElementById("firstName").value,
-      lastName: document.getElementById("lastName").value,
-      emailAddress: document.getElementById("emailAddress").value,
-      password: document.getElementById("password").value,
-      referralCode: document.getElementById("referralCode").value,
-    };
-    dataRef.push(result);
+    signUp( 
+      document.getElementById("emailAddress").value,
+      document.getElementById("password").value,
+      (auth) => {
+        const dataRef = firebaseConfig.database().ref(`users/${auth.user.uid}`);
+        let result = {
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value,
+          emailAddress: document.getElementById("emailAddress").value,
+          refereeCode: document.getElementById("refereeCode").value,
+          referralCode: codeGen(document.getElementById("firstName").value),
+        };
+        dataRef.update(result);
+        //redirect
+        props.history.replace("/signup", "/dashboard");
+      }
+    );
   };
 
   return (
@@ -83,19 +91,12 @@ export default function SignUpForm({ signUp, ...props }) {
           <Form.Group>
             <Form.Label>Referral Code</Form.Label>
             <Form.Control 
-              id="referralCode"
+              id="refereeCode"
               type="text"
               placeholder="Code"
               value={query.get("ref")} />
           </Form.Group>
-          <Button variant="primary" type='submit'
-            onClick={() => {
-              signUp(
-                document.getElementById("emailAddress").value,
-                document.getElementById("password").value,
-                () => props.history.replace("/signup", "/dashboard")
-              );
-            }}>
+          <Button variant="primary" type='submit'>
             Submit
           </Button>
         </Form>

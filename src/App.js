@@ -10,6 +10,7 @@ import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
 
+import firebaseConfig from './firebaseConfig.js';
 import { TwitterShareButton } from 'react-share';
 
 class App extends React.Component {
@@ -49,26 +50,20 @@ class App extends React.Component {
       .then(callback)
   }
 
-  GenerateReferralCode = (userName) => {
-    let name = userName.split(" ")[0].toLowerCase();
-
-    name += Math.floor(Math.random() * 1000);
-
-    while (this.state.ids.includes(name)) {
-      name += Math.floor(Math.random() * 10);
-    }
-
-    this.state.user.id = name;
-
-    this.setState({
-      user: this.state.user,
-      ids: [...this.state.ids, name]
-    })
+  GenerateReferralCode = (fname) => {
+    let name = fname.toLowerCase() + Math.floor(Math.random() * 10);
+    firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
+      const data = snapshot.val() ?? {};
+      const allCodes = Object.values(data).map((userData) => userData.referralCode);
+      while (allCodes.includes(name)) {
+        name += Math.floor(Math.random() * 10);
+      }
+      return name;
+    });
   }
 
   render() {
     console.log(this.state.ids);
-
     return (
       <Router>
         <div className="App">
