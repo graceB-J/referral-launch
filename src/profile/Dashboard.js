@@ -57,42 +57,6 @@ const Dashboard = (props) => {
 
   return (
     <Container>
-      {/* <form onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(e.target);
-      }}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Name"
-          onChange={(e) => handleChange(e.target)}
-          value={userInfo.username} />
-        <input
-          type="text"
-          name="referralCode"
-          placeholder="Referral Code"
-          onChange={(e) => handleChange(e.target)}
-          value={userInfo.referralCode} />
-        <input
-          type="text"
-          name="totalReferrals"
-          placeholder="Total Referrals"
-          onChange={(e) => handleChange(e.target)}
-          value={userInfo.totalReferrals} />
-        <button> Submit Information </button>
-      </form>
-      <ul>
-        {users.map((refer) => {
-          return (
-            <li key={refer.id}>
-              <h3>{refer.username}</h3>
-              <p>referralcode: {refer.referralCode}</p><br />
-              <p>Number of referrals: {refer.totalReferrals}</p>
-              <button onClick={() => removeUser(refer.id)}>Remove User</button>
-            </li>
-          )
-        })}
-      </ul> */}
       <Jumbotron>
         <h3>Your Referral Code</h3>
         <h1>kyungjin15</h1>

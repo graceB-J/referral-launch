@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from "react-router-dom";
-import firebase, { auth, provider } from './firebaseConfig.js';
+import { auth } from './firebaseConfig.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TopBar from "./TopBar";
@@ -13,14 +13,12 @@ import Dashboard from './profile/Dashboard.js';
 import Landing from './Landing.js';
 
 import firebaseConfig from './firebaseConfig.js';
-import { TwitterShareButton } from 'react-share';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
-      ids: []
+      user: null
     }
   }
 
@@ -66,7 +64,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.ids);
     return (
       <Router>
         <div className="App">
