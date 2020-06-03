@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import firebase, { auth, provider } from './firebaseConfig.js';
 
 import TopBar from "./TopBar";
@@ -47,7 +47,6 @@ class App extends React.Component {
   }
 
   signIn = (email, password, formhistory) => {
-
     auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         console.log(this.props);
@@ -64,15 +63,26 @@ class App extends React.Component {
             <Route
               exact
               path="/signin"
-              render={props => <SignInForm {...props} hasAccount={"TEST"} signIn={this.signIn} />}
+              render={props => <SignInForm {...props} signIn={this.signIn} />}
             />
             <Route
               exact path="/signup"
-              component={() => { return (<SignUpForm signUp={this.signUp} />) }}
+              render={props => <SignUpForm {...props} signUp={this.signUp} />}
             />
             <Route exact path="/about" component={About} />
             <Route exact path="/faq" component={FAQ} />
-            <Route exact path="/dashboard" component={Dashboard} />
+            <Route
+              exact
+              path="/dashboard"
+              render={props => this.state.user ?
+                <Dashboard />
+                :
+                <Redirect to={{
+                  pathname: "/login"
+                }}
+                />
+              }
+            />
             <Route exact path="/" />
           </Switch>
         </div>

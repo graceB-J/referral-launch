@@ -1,11 +1,15 @@
 import React from "react";
 import "./SignForm.css";
 
+import { useLocation } from "react-router-dom";
+
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
 const SignUpForm = ({ signUp }) => {
+  const query = new URLSearchParams(useLocation().search);
+
   return (
     <div className="auth-wrapper">
       <div className="auth-inner">
@@ -50,8 +54,10 @@ const SignUpForm = ({ signUp }) => {
             <Form.Label>Referral Code</Form.Label>
             <Form.Control id="SignUpReferral"
               type="text"
-              placeholder="Code" />
+              placeholder="Code"
+              value={query.get("ref")} />
           </Form.Group>
+
           <Button variant="primary"
             onClick={() => {
               signUp(
