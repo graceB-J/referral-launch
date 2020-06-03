@@ -93,6 +93,16 @@ const Dashboard = () => {
       </ul> */}
       <h3>Your Referral Code</h3>
       <h1>kyungjin15</h1>
+      <Button
+        variant="primary"
+        onClick={() => {
+          const url = window.location.href.split("dashboard");
+          const referralLink = url[0].concat("signin?ref=REFERRALCODEHERE");
+          navigator.clipboard.writeText(referralLink);
+        }}
+      >
+        copy a link to send to your friends!
+      </Button>
       <h3>Your Points</h3>
       <h1>3</h1>
       <h3>Share us on Twitter and Facebook for extra points</h3>
