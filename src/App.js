@@ -10,6 +10,8 @@ import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
 
+import Landing from './Landing.js';
+
 import { TwitterShareButton } from 'react-share';
 
 class App extends React.Component {
@@ -98,8 +100,9 @@ class App extends React.Component {
                 <Redirect {...props} to={{ pathname: "/signin" }} />
               }
             />
-            <Route exact path="/" />
+            <Route exact path="/" component={Landing} />
           </Switch>
+
         </div>
       </Router>
     )
