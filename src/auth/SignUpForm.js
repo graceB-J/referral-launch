@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import "./SignForm.css";
 import firebaseConfig from './../firebaseConfig.js';
 
-export default function SignUpForm(props, { signUp }) {
+export default function SignUpForm({ signUp, ...props }) {
   const query = new URLSearchParams(useLocation().search);
 
   const handleSubmit = (e) => {
@@ -93,7 +93,7 @@ export default function SignUpForm(props, { signUp }) {
               signUp(
                 document.getElementById("emailAddress").value,
                 document.getElementById("password").value,
-                () => props.history.replace("/signpup", "/dashboard")
+                () => props.history.replace("/signup", "/dashboard")
               );
             }}>
             Submit

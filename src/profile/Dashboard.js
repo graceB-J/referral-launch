@@ -100,7 +100,7 @@ const Dashboard = (props) => {
           variant="primary"
           onClick={() => {
             const url = window.location.href.split("dashboard");
-            const referralLink = url[0].concat("signin?ref=REFERRALCODEHERE");
+            const referralLink = url[0].concat("signup?ref=REFERRALCODEHERE");
             navigator.clipboard.writeText(referralLink);
           }}
         >
