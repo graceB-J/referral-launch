@@ -1,16 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import firebase, { auth, provider } from './firebaseConfig.js';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import TopBar from "./TopBar";
 import About from "./about/About.js";
 import FAQ from "./about/FAQ.js";
 import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
-import Dashboard from './Dashboard.js';
-
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Dashboard from './profile/Dashboard.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -91,4 +89,5 @@ class App extends React.Component {
     )
   }
 }
+
 export default App;
