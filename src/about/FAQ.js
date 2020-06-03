@@ -12,7 +12,7 @@ function FAQ(props) {
 
             <div className="body" >
                 <CardColumns>
-                    <Card style={{ width: '18rem' }}>
+                    <Card>
                         <Card.Body>
                             <Card.Title>Q: Why ReShoes? </Card.Title>
                             <Card.Text>
@@ -23,7 +23,7 @@ function FAQ(props) {
                         </Card.Body>
                     </Card>
 
-                    <Card style={{ width: '18rem' }}>
+                    <Card>
                         <Card.Body>
                             <Card.Title>Q: What are the milestones? </Card.Title>
                             <Card.Text>
@@ -32,7 +32,7 @@ function FAQ(props) {
                         </Card.Body>
                     </Card>
 
-                    <Card style={{ width: '18rem' }}>
+                    <Card>
                         <Card.Body>
                             <Card.Title>Q: Will I lose all my points if I reach a milestone and want the item? </Card.Title>
                             <Card.Text>
@@ -41,7 +41,7 @@ function FAQ(props) {
                         </Card.Body>
                     </Card>
 
-                    <Card style={{ width: '18rem' }}>
+                    <Card>
                         <Card.Body>
                             <Card.Title>Q: When are you releasing your first line of shoes?!</Card.Title>
                             <Card.Text>
@@ -51,7 +51,7 @@ function FAQ(props) {
                         </Card.Body>
                     </Card>
 
-                    <Card style={{ width: '18rem' }}>
+                    <Card>
                         <Card.Body>
                             <Card.Title>Q: Does your company detect spam accounts in regards to your referral program?</Card.Title>
                             <Card.Text>
@@ -61,7 +61,7 @@ function FAQ(props) {
                         </Card.Body>
                     </Card>
 
-                    <Card style={{ width: '18rem' }}>
+                    <Card>
                         <Card.Body>
                             <Card.Title>Q: Where is ReShoes based?</Card.Title>
                             <Card.Text>
