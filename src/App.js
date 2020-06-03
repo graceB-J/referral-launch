@@ -61,26 +61,27 @@ class App extends React.Component {
           <TopBar user={this.state.user} logout={this.logout} />
           <Switch>
             <Route
-              exact
-              path="/signin"
-              render={props => <SignInForm {...props} signIn={this.signIn} />}
+              exact path="/signin"
+              render={props => this.state.user ?
+                <Redirect {...props} to={{ pathname: "/dashboard" }} />
+                :
+                <SignInForm {...props} signIn={this.signIn} />}
             />
             <Route
               exact path="/signup"
-              render={props => <SignUpForm {...props} signUp={this.signUp} />}
+              render={props => this.state.user ?
+                <Redirect {...props} to={{ pathname: "/dashboard" }} />
+                :
+                <SignUpForm {...props} signUp={this.signUp} />}
             />
             <Route exact path="/about" component={About} />
             <Route exact path="/faq" component={FAQ} />
             <Route
-              exact
-              path="/dashboard"
+              exact path="/dashboard"
               render={props => this.state.user ?
-                <Dashboard />
+                <Dashboard {...props} />
                 :
-                <Redirect to={{
-                  pathname: "/login"
-                }}
-                />
+                <Redirect {...props} to={{ pathname: "/signin" }} />
               }
             />
             <Route exact path="/" />

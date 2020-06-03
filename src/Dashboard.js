@@ -2,29 +2,20 @@ import React, { Component } from 'react';
 import firebaseConfig from './firebaseConfig.js';
 
 class Dashboard extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            username: "",
-            referralCode: "",
-            totalReferrals: 0,
-            users: []
-        }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-
+    state = {
+        username: "",
+        referralCode: "",
+        totalReferrals: 0,
+        users: []
     }
 
-
-    handleChange(e) {
+    handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
     }
 
-    handleSubmit(e) {
+    handleSubmit = e => {
         e.preventDefault();
         const dataRef = firebaseConfig.database().ref('users');
         const referrals = {
@@ -67,7 +58,7 @@ class Dashboard extends Component {
 
     removeUser(itemId) {
         const useRef = firebaseConfig.database().ref(`/users/${itemId}`);
-        useRef.remove();
+        useRef.remove(); //Make this one line
     }
 
     render() {
