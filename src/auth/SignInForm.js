@@ -15,17 +15,6 @@ export default function SignInForm(props) {
         <h1>Sign In</h1>
         <hr />
         <Form>
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Text>Name</InputGroup.Text>
-            </InputGroup.Prepend>
-            <Form.Control id="SignInFirstName"
-              type="text"
-              placeholder="First name" />
-            <Form.Control id="SignInLastName"
-              type="text"
-              placeholder="Last name" />
-          </InputGroup>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control id="SignInEmail"
