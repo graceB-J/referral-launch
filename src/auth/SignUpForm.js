@@ -37,12 +37,12 @@ export default function SignUpForm({ signUp, ...props }) {
   }, [password, confirm])
 
   useEffect(() => {
-    if (BLACKLIST.includes(email.split("@")[1])) {
-      document.getElementById("SignUpEmailAddress").setCustomValidity("Possible Temporary Email Detected");
-    }
-    else {
-      document.getElementById("SignUpEmailAddress").setCustomValidity("");
-    }
+    document.getElementById("SignUpEmailAddress").setCustomValidity(
+      BLACKLIST.includes(email.split("@")[1]) ?
+        "Possible Temporary Email Detected"
+        :
+        ""
+    )
   }, [email])
 
 
