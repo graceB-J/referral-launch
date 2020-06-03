@@ -7,7 +7,6 @@ const ProfilePage = () => {
   return (
     <div>
       <p>Your Referral Code: !*(^!@(*(@#</p>
-      <MilestonesDisplay />
       <p>Your Points: ##</p>
       <p>Your Referrals: ##</p>
       <User />

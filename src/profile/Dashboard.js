@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import firebaseConfig from './firebaseConfig.js';
+import firebaseConfig from './../firebaseConfig.js';
+import MilestonesDisplay from "./MilestonesDisplay";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -100,7 +101,8 @@ class Dashboard extends Component {
                         </ul>
                     </div>
                 </section>
-
+                
+                <MilestonesDisplay />
             </div>
         )
     }

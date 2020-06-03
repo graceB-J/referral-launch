@@ -7,7 +7,7 @@ import About from "./about/About.js";
 import FAQ from "./about/FAQ.js";
 import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
-import Dashboard from './Dashboard.js';
+import Dashboard from './profile/Dashboard.js';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
