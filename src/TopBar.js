@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
+import SocialMediaButton from './profile/TwitterButton.js';
 
 export default function TopBar({ match, user, logout }) {
   return (
@@ -29,6 +30,7 @@ export default function TopBar({ match, user, logout }) {
           }
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
+          <SocialMediaButton url="www.google.com" text="Check it out!"/>
         </Nav>
 
         {user

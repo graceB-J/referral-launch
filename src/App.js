@@ -10,6 +10,8 @@ import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
 
+import { TwitterShareButton } from 'react-share';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
