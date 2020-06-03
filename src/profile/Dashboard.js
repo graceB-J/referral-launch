@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import firebaseConfig from './../firebaseConfig.js';
+import firebaseConfig from '../firebaseConfig.js';
 import MilestonesDisplay from "./MilestonesDisplay";
 
-const Dashboard = () => {
-  const [userInfo, setUserInfo] = useState({username: "", referralCode: "", totalReferrals: ""});
+const Dashboard = (props) => {
+  const [userInfo, setUserInfo] = useState({ username: "", referralCode: "", totalReferrals: "" });
   const [users, setUsers] = useState([]);
 
   const handleChange = (target) => {
@@ -23,7 +23,7 @@ const Dashboard = () => {
     }
     dataRef.push(referrals);
 
-    setUserInfo({username: "", referralCode: "", totalReferrals: ""});
+    setUserInfo({ username: "", referralCode: "", totalReferrals: "" });
   }
 
   useEffect(() => {
@@ -50,6 +50,10 @@ const Dashboard = () => {
 
   return (
     <div>
+      <section>
+        <div>
+        </div>
+      </section>
       <section>
         <form onSubmit={(e) => {
           e.preventDefault();

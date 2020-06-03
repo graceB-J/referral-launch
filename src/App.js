@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from "react-router-dom";
 import firebase, { auth, provider } from './firebaseConfig.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,7 +14,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
+      ids: []
     }
   }
 
@@ -36,23 +37,36 @@ class App extends React.Component {
     auth.signOut();
   }
 
-  signUp = (email, password) => {
+  signUp = (email, password, callback) => {
     auth.createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log(this.props);
-        this.props.history.push("/dashboard");
-      })
+      .then(callback)
   }
 
-  signIn = (email, password, formhistory) => {
+  signIn = (email, password, callback) => {
     auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log(this.props);
-        formhistory.push("/dashboard");
-      })
+      .then(callback)
+  }
+
+  GenerateReferralCode = (userName) => {
+    let name = userName.split(" ")[0].toLowerCase();
+
+    name += Math.floor(Math.random() * 1000);
+
+    while (this.state.ids.includes(name)) {
+      name += Math.floor(Math.random() * 10);
+    }
+
+    this.state.user.id = name;
+
+    this.setState({
+      user: this.state.user,
+      ids: [...this.state.ids, name]
+    })
   }
 
   render() {
+    console.log(this.state.ids);
+
     return (
       <Router>
         <div className="App">
@@ -70,14 +84,14 @@ class App extends React.Component {
               render={props => this.state.user ?
                 <Redirect {...props} to={{ pathname: "/dashboard" }} />
                 :
-                <SignUpForm {...props} signUp={this.signUp} />}
+                <SignUpForm {...props} signUp={this.signUp} codeGen={this.GenerateReferralCode} />}
             />
             <Route exact path="/about" component={About} />
             <Route exact path="/faq" component={FAQ} />
             <Route
               exact path="/dashboard"
               render={props => this.state.user ?
-                <Dashboard {...props} />
+                <Dashboard {...props} user={this.state.user} />
                 :
                 <Redirect {...props} to={{ pathname: "/signin" }} />
               }

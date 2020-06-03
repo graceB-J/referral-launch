@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
-const SignUpForm = ({ signUp }) => {
+export default function SignUpForm(props, { signUp }) {
   const query = new URLSearchParams(useLocation().search);
 
   return (
@@ -62,7 +62,8 @@ const SignUpForm = ({ signUp }) => {
             onClick={() => {
               signUp(
                 document.getElementById("SignUpUserEmail").value,
-                document.getElementById("SignUpUserPassword").value
+                document.getElementById("SignUpUserPassword").value,
+                () => props.history.replace("/signpup", "/dashboard")
               );
               console.log(
                 document.getElementById("SignUpFirstName").value,
@@ -77,8 +78,6 @@ const SignUpForm = ({ signUp }) => {
           </Button>
         </Form>
       </div>
-    </div>
+    </div >
   )
 }
-
-export default SignUpForm;
