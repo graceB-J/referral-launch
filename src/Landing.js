@@ -1,22 +1,18 @@
 import React from 'react';
+import "./Landing.css";
 
-class Landing extends React.Component {
-
-    constructor(props){
-        super(props);
-        this.state = {
-
-        }
-    }
-
-    render(){
-        return(
+function Landing({ match }) {
+    return (
+        <div className="landing">
             <div>
-                <h1> Reduce, Reuse, Reshoes </h1>
-                <h1> COMING SOON </h1>
+                <img src="/landing.png" alt="Reshoes. shoes rethought, shoes reused" width="100%" />
             </div>
-        )
-    }
+            <div>
+                <img src="/comingsoon.png" alt="Coming Soon" width="100%" />
+            </div>
+
+        </div>
+    )
 
 }
 

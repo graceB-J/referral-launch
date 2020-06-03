@@ -100,9 +100,9 @@ class App extends React.Component {
                 <Redirect {...props} to={{ pathname: "/signin" }} />
               }
             />
-            <Route exact path="/" />
+            <Route exact path="/" component={Landing} />
           </Switch>
-          <Landing />
+
         </div>
       </Router>
     )
