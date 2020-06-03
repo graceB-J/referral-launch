@@ -11,6 +11,9 @@ import Dashboard from './profile/Dashboard.js';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { TwitterShareButton } from 'react-share';
+
+
 
 class App extends React.Component {
   constructor(props) {
