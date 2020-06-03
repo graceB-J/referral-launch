@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Container from "react-bootstrap/Container"
+import Jumbotron from "react-bootstrap/Jumbotron"
 import Button from "react-bootstrap/Button"
 
 import { FaTwitter, FaFacebookF } from 'react-icons/fa';
@@ -91,21 +92,24 @@ const Dashboard = () => {
           )
         })}
       </ul> */}
-      <h3>Your Referral Code</h3>
-      <h1>kyungjin15</h1>
-      <Button
-        variant="primary"
-        onClick={() => {
-          const url = window.location.href.split("dashboard");
-          const referralLink = url[0].concat("signin?ref=REFERRALCODEHERE");
-          navigator.clipboard.writeText(referralLink);
-        }}
-      >
-        copy a link to send to your friends!
-      </Button>
+      <Jumbotron>
+        <h3>Your Referral Code</h3>
+        <h1>kyungjin15</h1>
+        <Button
+          variant="primary"
+          onClick={() => {
+            const url = window.location.href.split("dashboard");
+            const referralLink = url[0].concat("signin?ref=REFERRALCODEHERE");
+            navigator.clipboard.writeText(referralLink);
+          }}
+        >
+          copy a link to send to your friends!
+        </Button>
+      </Jumbotron>
+      <Jumbotron>
       <h3>Your Points</h3>
       <h1>3</h1>
-      <h3>Share us on Twitter and Facebook for extra points</h3>
+      <h5>Share us on Twitter and Facebook for extra points</h5>
       <Button
         variant="primary"
         size="lg">
@@ -116,6 +120,7 @@ const Dashboard = () => {
         size="lg">
         <FaFacebookF />
       </Button>
+      </Jumbotron>
       <MilestonesDisplay />
     </Container>
   )
