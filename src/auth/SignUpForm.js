@@ -1,11 +1,15 @@
 import React, { FC, ChangeEvent, FormEvent, useState } from "react";
-import "./SignForm.css";
-import firebaseConfig from './../firebaseConfig.js';
+
+import { useLocation } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
-const SignUpForm = ({ signUp }) => {
+import "./SignForm.css";
+import firebaseConfig from './../firebaseConfig.js';
+
+export default function SignUpForm(props, { signUp }) {
+  const query = new URLSearchParams(useLocation().search);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,22 +85,21 @@ const SignUpForm = ({ signUp }) => {
             <Form.Control 
               id="referralCode"
               type="text"
-              placeholder="Code" />
+              placeholder="Code"
+              value={query.get("ref")} />
           </Form.Group>
-
           <Button variant="primary" type='submit'
             onClick={() => {
               signUp(
                 document.getElementById("emailAddress").value,
-                document.getElementById("password").value
+                document.getElementById("password").value,
+                () => props.history.replace("/signpup", "/dashboard")
               );
             }}>
             Submit
           </Button>
         </Form>
       </div>
-    </div>
+    </div >
   )
 }
-
-export default SignUpForm;
