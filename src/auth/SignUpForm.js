@@ -1,7 +1,6 @@
 import React, { FC, ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -12,13 +11,7 @@ import firebaseConfig from './../firebaseConfig.js';
 
 import EmailBlacklist from "./BLACKLIST.json";
 
-// let BLACKLIST;
-// axios.get(`https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.json`)
-//   .then(response => {
-//     BLACKLIST = response.data;
-//   })
-
-export default function SignUpForm({ signUp, ...props }) {
+export default function SignUpForm({ signUp, codeGen, ...props }) {
   const query = new URLSearchParams(useLocation().search);
 
   const BLACKLIST = EmailBlacklist.blacklist;
@@ -28,7 +21,7 @@ export default function SignUpForm({ signUp, ...props }) {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    document.getElementById("SignUpConfirmPassword").setCustomValidity(
+    document.getElementById("signUpConfirmPassword").setCustomValidity(
       password === confirm ?
         ""
         :
@@ -37,7 +30,7 @@ export default function SignUpForm({ signUp, ...props }) {
   }, [password, confirm])
 
   useEffect(() => {
-    document.getElementById("SignUpEmailAddress").setCustomValidity(
+    document.getElementById("signUpEmailAddress").setCustomValidity(
       BLACKLIST.includes(email.split("@")[1]) ?
         "Possible Temporary Email Detected"
         :
@@ -46,23 +39,26 @@ export default function SignUpForm({ signUp, ...props }) {
   }, [email])
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    firebaseConfig.database().ref('users').push(
-      {
-        firstName: document.getElementById("SignUpFirstName").value,
-        lastName: document.getElementById("SignUpLastName").value,
-        emailAddress: email,
-        password: document.getElementById("SignUpPassword").value,
-        referralCode: document.getElementById("SignUpReferralCode").value,
-      }
-    );
+    const code = await codeGen(document.getElementById("signUpFirstName").value);
 
     signUp(
-      document.getElementById("SignUpEmailAddress").value,
-      document.getElementById("SignUpPassword").value,
-      () => props.history.replace("/signup", "/dashboard")
+      document.getElementById("signUpEmailAddress").value,
+      document.getElementById("signUpPassword").value,
+      (auth) => {
+        firebaseConfig.database().ref(`users/${auth.user.uid}`).update(
+          {
+            firstName: document.getElementById("signUpFirstName").value,
+            lastName: document.getElementById("signUpLastName").value,
+            emailAddress: document.getElementById("signUpEmailAddress").value,
+            refereeCode: document.getElementById("refereeCode").value,
+            referralCode: code,
+          }
+        );
+
+        props.history.replace("/signup", "/dashboard");
+      }
     );
   };
 
@@ -79,12 +75,12 @@ export default function SignUpForm({ signUp, ...props }) {
             </InputGroup.Prepend>
 
             <Form.Control
-              id="SignUpFirstName"
+              id="signUpFirstName"
               type="text"
               placeholder="First name" />
 
             <Form.Control
-              id="SignUpLastName"
+              id="signUpLastName"
               type="text"
               placeholder="Last name" />
           </InputGroup>
@@ -92,7 +88,7 @@ export default function SignUpForm({ signUp, ...props }) {
           <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control
-              id="SignUpEmailAddress"
+              id="signUpEmailAddress"
               type="email"
               onChange={e => setEmail(e.target.value)}
               placeholder="Enter email" />
@@ -104,7 +100,7 @@ export default function SignUpForm({ signUp, ...props }) {
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
-              id="SignUpPassword"
+              id="signUpPassword"
               type="password"
               onChange={e => setPassword(e.target.value)}
               placeholder="Password" />
@@ -113,7 +109,7 @@ export default function SignUpForm({ signUp, ...props }) {
           <Form.Group>
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
-              id="SignUpConfirmPassword"
+              id="signUpConfirmPassword"
               type="password"
               onChange={e => setConfirm(e.target.value)}
               placeholder="Password" />
@@ -122,13 +118,12 @@ export default function SignUpForm({ signUp, ...props }) {
           <Form.Group>
             <Form.Label>Referral Code</Form.Label>
             <Form.Control
-              id="SignUpReferralCode"
+              id="refereeCode"
               type="text"
               placeholder="Code"
               value={query.get("ref")} />
           </Form.Group>
-
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type='submit'>
             Submit
           </Button>
         </Form>
