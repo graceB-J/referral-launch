@@ -1,14 +1,14 @@
 import React, { FC, ChangeEvent, FormEvent, useState } from "react";
-import "./SignForm.css";
 
 import { useLocation } from "react-router-dom";
-
-import firebaseConfig from './../firebaseConfig.js';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
-export default function SignUpForm(props, { signUp }) {
+import "./SignForm.css";
+import firebaseConfig from './../firebaseConfig.js';
+
+export default function SignUpForm({ signUp, ...props }) {
   const query = new URLSearchParams(useLocation().search);
 
   const handleSubmit = (e) => {
@@ -94,7 +94,7 @@ export default function SignUpForm(props, { signUp }) {
               signUp(
                 document.getElementById("emailAddress").value,
                 document.getElementById("password").value,
-                () => props.history.replace("/signpup", "/dashboard")
+                () => props.history.replace("/signup", "/dashboard")
               );
             }}>
             Submit
