@@ -4,9 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 
-const TopBar = ({ match, user, logout }) => {
-  console.log(user);
-
+export default function TopBar({ match, user, logout }) {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">
@@ -46,5 +44,3 @@ const TopBar = ({ match, user, logout }) => {
     </Navbar>
   );
 }
-
-export default TopBar;
