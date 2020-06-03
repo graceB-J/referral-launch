@@ -47,12 +47,14 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
       document.getElementById("signUpEmailAddress").value,
       document.getElementById("signUpPassword").value,
       (auth) => {
+
+        addPoints(document.getElementById("refereeCode").value);
+
         firebaseConfig.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
             lastName: document.getElementById("signUpLastName").value,
             emailAddress: document.getElementById("signUpEmailAddress").value,
-            refereeCode: document.getElementById("refereeCode").value,
             referralCode: code,
             points: 0,
             has_shared: {
@@ -67,6 +69,21 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
       }
     );
   };
+
+  const addPoints = (referrerCode) => {
+    firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
+      const data = snapshot.val() ?? {};
+      let referrer = 0;
+      let theirPoints = 0;
+      Object.keys(data).forEach((uid) => {
+        if (referrerCode === data.uid.referralCode) {
+          referrer = uid;
+          theirPoints = data.uid.points
+        }
+      });
+      firebaseConfig.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
+    });
+  }
 
   return (
     <div className="auth-wrapper">

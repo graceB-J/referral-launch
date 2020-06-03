@@ -14,6 +14,14 @@ const Dashboard = (props) => {
   const [userInfo, setUserInfo] = useState({ username: "", referralCode: "", totalReferrals: "" });
   const [users, setUsers] = useState([]);
 
+
+  // Firebase 'on' function and set state for total referrals
+  ref.on("child_changed", function (snapshot) {
+    var changedPost = snapshot.val();
+    console.log("The updated points is " + changedPost.totalReferrals);
+    setUserInfo(totalReferrals + 1);
+  });
+
   const handleChange = (target) => {
     setUserInfo((prev) => ({
       ...prev,
@@ -73,7 +81,7 @@ const Dashboard = (props) => {
       </Jumbotron>
       <Jumbotron>
         <h3>Your Points</h3>
-        <h1>3</h1>
+        <h1>{firebase.database().ref('users').orderByChild('emailAddress').equalTo().child('points')}</h1>
         <h5>Share us on Twitter and Facebook for extra points</h5>
         <Button
           variant="primary"
