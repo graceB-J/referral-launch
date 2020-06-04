@@ -28,10 +28,9 @@ export default function SignUpForm({ signUp, ...props }) {
 
   useEffect(() => {
     document.getElementById("signUpEmailAddress").setCustomValidity(
-      blacklist.includes(email.split("@")[1]) ?
-        "Possible Temporary Email Detected"
-        :
-        ""
+      blacklist.includes(email.split("@")[1])
+        ? "Possible Temporary Email Detected"
+        : ""
     )
   }, [email])
 
@@ -59,7 +58,6 @@ export default function SignUpForm({ signUp, ...props }) {
             }
           }
         );
-
         props.history.replace("/signup", "/dashboard");
       }
     );
@@ -88,7 +86,9 @@ export default function SignUpForm({ signUp, ...props }) {
           theirPoints = data[uid].points
         }
       });
-      firebase.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
+      if (referrer !== 0) {
+        firebase.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
+      }
     });
   }
 
