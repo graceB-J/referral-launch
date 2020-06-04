@@ -58,7 +58,8 @@ export default function SignUpForm({ signUp, ...props }) {
               facebook: false,
               twitter: false,
               email: false
-            }
+            },
+            receivedAward: [false, false, false, false]
           }
         );
 
