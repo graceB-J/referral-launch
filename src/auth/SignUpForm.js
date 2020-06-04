@@ -54,11 +54,13 @@ export default function SignUpForm({ signUp, ...props }) {
             referralCode: userCode,
             points: 0,
             admin: referredCode === "AdminCode10",
+            address: "",
             hasShared: {
               facebook: false,
               twitter: false,
               email: false
-            }
+            },
+            receivedAward: [false, false, false, false]
           }
         );
 
