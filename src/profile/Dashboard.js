@@ -14,32 +14,12 @@ const Dashboard = (props) => {
   const [userInfo, setUserInfo] = useState({ username: "", referralCode: "", totalReferrals: "" });
   const [users, setUsers] = useState([]);
 
-
   // Firebase 'on' function and set state for total referrals
   ref.on("child_changed", function (snapshot) {
     var changedPost = snapshot.val();
     console.log("The updated points is " + changedPost.totalReferrals);
     setUserInfo(totalReferrals + 1);
   });
-
-  const handleChange = (target) => {
-    setUserInfo((prev) => ({
-      ...prev,
-      [target.name]: target.value,
-    }));
-  }
-
-  const handleSubmit = (target) => {
-    const dataRef = firebaseConfig.database().ref('users');
-    const referrals = {
-      username: userInfo.username,
-      referralCode: userInfo.referralCode,
-      totalReferrals: userInfo.totalReferrals
-    }
-    dataRef.push(referrals);
-
-    setUserInfo({ username: "", referralCode: "", totalReferrals: "" });
-  }
 
   useEffect(() => {
     const userRef = firebaseConfig.database().ref("users");
@@ -57,11 +37,6 @@ const Dashboard = (props) => {
       setUsers(newState);
     });
   }, []);
-
-  const removeUser = (itemId) => {
-    const userRef = firebaseConfig.database().ref(`/users/${itemId}`);
-    userRef.remove();
-  }
 
   return (
     <Container>

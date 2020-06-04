@@ -47,9 +47,7 @@ export default function SignUpForm({ signUp, ...props }) {
       document.getElementById("signUpEmailAddress").value,
       document.getElementById("signUpPassword").value,
       (auth) => {
-
         addPoints(document.getElementById("refereeCode").value);
-
         firebaseConfig.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
@@ -77,7 +75,6 @@ export default function SignUpForm({ signUp, ...props }) {
       const allCodes = Object.values(data).map((userData) => userData.referralCode);
       while (allCodes.includes(name)) {
         name += Math.floor(Math.random() * 10);
-
       }
       return name;
     });
