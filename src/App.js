@@ -50,19 +50,6 @@ class App extends React.Component {
       .then(user => callback(user))
   }
 
-  GenerateReferralCode = async (fname) => {
-    let name = fname.toLowerCase() + Math.floor(Math.random() * 10);
-    return await firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
-      const data = snapshot.val() ?? {};
-      const allCodes = Object.values(data).map((userData) => userData.referralCode);
-      while (allCodes.includes(name)) {
-        name += Math.floor(Math.random() * 10);
-
-      }
-      return name;
-    });
-  }
-
   render() {
     return (
       <Router>
@@ -81,7 +68,7 @@ class App extends React.Component {
               render={props => this.state.user ?
                 <Redirect {...props} to={{ pathname: "/dashboard" }} />
                 :
-                <SignUpForm {...props} signUp={this.signUp} codeGen={this.GenerateReferralCode} />}
+                <SignUpForm {...props} signUp={this.signUp} />}
             />
             <Route exact path="/about" component={About} />
             <Route exact path="/faq" component={FAQ} />

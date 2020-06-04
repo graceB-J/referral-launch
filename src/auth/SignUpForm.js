@@ -11,7 +11,7 @@ import firebaseConfig from './../firebaseConfig.js';
 
 import EmailBlacklist from "./BLACKLIST.json";
 
-export default function SignUpForm({ signUp, codeGen, ...props }) {
+export default function SignUpForm({ signUp, ...props }) {
   const query = new URLSearchParams(useLocation().search);
 
   const BLACKLIST = EmailBlacklist.blacklist;
@@ -41,7 +41,7 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const code = await codeGen(document.getElementById("signUpFirstName").value);
+    const code = await GenerateReferralCode(document.getElementById("signUpFirstName").value);
 
     signUp(
       document.getElementById("signUpEmailAddress").value,
@@ -70,15 +70,28 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
     );
   };
 
+  const GenerateReferralCode = async (fname) => {
+    let name = fname.toLowerCase() + Math.floor(Math.random() * 10);
+    return await firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
+      const data = snapshot.val() ?? {};
+      const allCodes = Object.values(data).map((userData) => userData.referralCode);
+      while (allCodes.includes(name)) {
+        name += Math.floor(Math.random() * 10);
+
+      }
+      return name;
+    });
+  }
+
   const addPoints = (referrerCode) => {
     firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
       const data = snapshot.val() ?? {};
       let referrer = 0;
       let theirPoints = 0;
       Object.keys(data).forEach((uid) => {
-        if (referrerCode === data.uid.referralCode) {
+        if (referrerCode === data[uid].referralCode) {
           referrer = uid;
-          theirPoints = data.uid.points
+          theirPoints = data[uid].points
         }
       });
       firebaseConfig.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
