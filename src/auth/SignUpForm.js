@@ -9,12 +9,10 @@ import Button from "react-bootstrap/Button";
 import "./SignForm.css";
 import firebase from './../firebaseConfig';
 
-import EmailBlacklist from "./BLACKLIST.json";
+import { blacklist } from "./BLACKLIST.json";
 
 export default function SignUpForm({ signUp, ...props }) {
   const query = new URLSearchParams(useLocation().search);
-
-  const BLACKLIST = EmailBlacklist.blacklist;
 
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -30,9 +28,10 @@ export default function SignUpForm({ signUp, ...props }) {
 
   useEffect(() => {
     document.getElementById("signUpEmailAddress").setCustomValidity(
-      BLACKLIST.includes(email.split("@")[1])
-        ? "Possible Temporary Email Detected"
-        : ""
+      blacklist.includes(email.split("@")[1]) ?
+        "Possible Temporary Email Detected"
+        :
+        ""
     )
   }, [email])
 
@@ -133,6 +132,7 @@ export default function SignUpForm({ signUp, ...props }) {
             <Form.Control
               id="signUpPassword"
               type="password"
+              minlength="6"
               onChange={e => setPassword(e.target.value)}
               placeholder="Password" />
           </Form.Group>
@@ -142,6 +142,7 @@ export default function SignUpForm({ signUp, ...props }) {
             <Form.Control
               id="signUpConfirmPassword"
               type="password"
+              minlength="6"
               onChange={e => setConfirm(e.target.value)}
               placeholder="Password" />
           </Form.Group>

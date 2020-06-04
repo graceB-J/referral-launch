@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { auth } from './firebaseConfig.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TopBar from "./TopBar";
@@ -25,7 +26,7 @@ class App extends React.Component {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          user
+          user: user
         });
       } else {
         this.setState({

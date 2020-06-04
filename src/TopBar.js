@@ -5,11 +5,10 @@ import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
-import SocialMediaButton from './profile/TwitterButton.js';
 
 export default function TopBar({ match, user, logout }) {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar id="ConsistentTopBar" bg="light" expand="lg">
       <Navbar.Brand href="/">
         <img
           alt=""
