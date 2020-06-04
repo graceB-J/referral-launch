@@ -3,8 +3,10 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import "./App.css"
 import TopBar from "./TopBar";
-import Landing from './Landing.js';
+import Landing from './about/Landing.js';
 import About from "./about/About.js";
 import FAQ from "./about/FAQ.js";
 import SignInForm from "./auth/SignInForm.js";
@@ -48,7 +50,15 @@ class App extends React.Component {
 
   signUp = (email, password, callback) => {
     auth.createUserWithEmailAndPassword(email, password)
-      .then(user => callback(user))
+      .then((auth) => callback(auth))
+      .then((auth) => {
+        return this.doSendEmailVerification(auth.user);
+      })
+  }
+
+  doSendEmailVerification = (user) => {
+    console.log("sending email");
+    user.sendEmailVerification();
   }
 
   signIn = (email, password, callback) => {

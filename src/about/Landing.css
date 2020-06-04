@@ -1,0 +1,17 @@
+.landing {
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+a {
+  color: #226699;
+}
+
+.lander-info {
+  color: rgb(71, 70, 70);
+  padding-bottom: 50px;
+}
+
+#ConsistentTopBar {
+  border-bottom: 2px solid #BBB;
+}
