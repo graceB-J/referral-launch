@@ -43,12 +43,13 @@ export default function SignUpForm({ signUp, ...props }) {
       document.getElementById("signUpEmailAddress").value,
       document.getElementById("signUpPassword").value,
       (auth) => {
-        addPoints(document.getElementById("refereeCode").value);
         firebase.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
             lastName: document.getElementById("signUpLastName").value,
             emailAddress: document.getElementById("signUpEmailAddress").value,
+            refererCode: document.getElementById("refererCode").value,
+            gavePoints: false,
             referralCode: code,
             points: 0,
             hasShared: {
@@ -73,23 +74,6 @@ export default function SignUpForm({ signUp, ...props }) {
         name += Math.floor(Math.random() * 10);
       }
       return name;
-    });
-  }
-
-  const addPoints = (referrerCode) => {
-    firebase.database().ref(`users`).once("value").then((snapshot) => {
-      const data = snapshot.val() ?? {};
-      let referrer = "";
-      let theirPoints = 0;
-      Object.keys(data).forEach((uid) => {
-        if (referrerCode === data[uid].referralCode) {
-          referrer = uid;
-          theirPoints = data[uid].points
-        }
-      });
-      if (referrer !== "") {
-        firebase.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
-      }
     });
   }
 
@@ -151,7 +135,7 @@ export default function SignUpForm({ signUp, ...props }) {
           <Form.Group>
             <Form.Label>Referral Code</Form.Label>
             <Form.Control
-              id="refereeCode"
+              id="refererCode"
               type="text"
               placeholder="Code"
               value={query.get("ref")} />

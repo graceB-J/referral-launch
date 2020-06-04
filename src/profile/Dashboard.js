@@ -26,7 +26,7 @@ const Dashboard = ({user}) => {
 
   return (
     <Container>
-      {auth.currentUser.emailVerified &&
+      {!auth.currentUser.emailVerified &&
         <Alert variant="danger">
           Your email is not emailVerified
         </Alert>}
