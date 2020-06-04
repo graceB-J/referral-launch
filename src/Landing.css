@@ -1,14 +1,16 @@
 .landing {
-    background-color: #f8f9fa;
-    text-align: center;
+  background-color: #f8f9fa;
+  text-align: center;
 }
+
 a {
-    color: #226699
+  color: #226699
 }
+
 h3 {
-    color: rgb(71, 70, 70)
+  color: rgb(71, 70, 70)
 }
 
 #ConsistentTopBar {
-    border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
 }

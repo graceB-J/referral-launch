@@ -7,11 +7,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
 import "./SignForm.css";
-import firebaseConfig from '../firebaseConfig.js';
+import firebase from './../firebaseConfig';
 
 import { blacklist } from "./BLACKLIST.json";
 
-export default function SignUpForm({ signUp, codeGen, ...props }) {
+export default function SignUpForm({ signUp, ...props }) {
   const query = new URLSearchParams(useLocation().search);
 
   const [password, setPassword] = useState("");
@@ -20,10 +20,9 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
 
   useEffect(() => {
     document.getElementById("signUpConfirmPassword").setCustomValidity(
-      password === confirm ?
-        ""
-        :
-        "Passwords Do not Match!"
+      password === confirm
+        ? ""
+        : "Passwords Do not Match!"
     );
   }, [password, confirm])
 
@@ -39,23 +38,21 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const code = await codeGen(document.getElementById("signUpFirstName").value);
+    const code = await GenerateReferralCode(document.getElementById("signUpFirstName").value);
 
     signUp(
       document.getElementById("signUpEmailAddress").value,
       document.getElementById("signUpPassword").value,
       (auth) => {
-
         addPoints(document.getElementById("refereeCode").value);
-
-        firebaseConfig.database().ref(`users/${auth.user.uid}`).update(
+        firebase.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
             lastName: document.getElementById("signUpLastName").value,
             emailAddress: document.getElementById("signUpEmailAddress").value,
             referralCode: code,
             points: 0,
-            has_shared: {
+            hasShared: {
               facebook: false,
               twitter: false,
               email: false
@@ -68,18 +65,30 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
     );
   };
 
+  const GenerateReferralCode = async (fname) => {
+    let name = fname.toLowerCase() + Math.floor(Math.random() * 10);
+    return await firebase.database().ref(`users`).once("value").then((snapshot) => {
+      const data = snapshot.val() ?? {};
+      const allCodes = Object.values(data).map((userData) => userData.referralCode);
+      while (allCodes.includes(name)) {
+        name += Math.floor(Math.random() * 10);
+      }
+      return name;
+    });
+  }
+
   const addPoints = (referrerCode) => {
-    firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
+    firebase.database().ref(`users`).once("value").then((snapshot) => {
       const data = snapshot.val() ?? {};
       let referrer = 0;
       let theirPoints = 0;
       Object.keys(data).forEach((uid) => {
-        if (referrerCode === data.uid.referralCode) {
+        if (referrerCode === data[uid].referralCode) {
           referrer = uid;
-          theirPoints = data.uid.points
+          theirPoints = data[uid].points
         }
       });
-      firebaseConfig.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
+      firebase.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
     });
   }
 
