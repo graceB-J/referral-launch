@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 
 import firebase from "firebase";
 import Table from "react-bootstrap/Table";
@@ -6,7 +6,11 @@ import Table from "react-bootstrap/Table";
 export default class AdminDashboard extends Component {
     constructor(props) {
         super(props);
-        this.state = { users: [] }
+        this.state = {
+            users: [],
+            sort: "",
+            filter: ""
+        }
     }
 
     componentDidMount() {
@@ -30,7 +34,6 @@ export default class AdminDashboard extends Component {
     }
 
     ValidateReward(points, reward) {
-        console.log(points, reward)
         switch (reward) {
             case 0:
                 return points < 10
@@ -43,23 +46,67 @@ export default class AdminDashboard extends Component {
         }
     }
 
-    SendAWard(userID, reward) {
-        console.log(userID, reward);
-        //firebase.database().ref(`users/${user}`) set rewards
+    SendAward = (userID, reward) => {
+        return () => {
+
+            //firebase.database().ref(`users/${user}`) set rewards
+            console.log(userID, reward);
+        }
+    }
+
+    getSort = () => {
+        if (this.state.sort === "FName") {
+            return ((a, b) => {
+                if (a.firstName.toLowerCase() < b.firstName.toLowerCase())
+                    return -1
+                if (a.firstName.toLowerCase() > b.firstName.toLowerCase())
+                    return 1
+                return 0
+            })
+        }
+        else if (this.state.sort === "LName") {
+            return ((a, b) => {
+                if (a.lastName.toLowerCase() < b.lastName.toLowerCase())
+                    return -1
+                if (a.lastName.toLowerCase() > b.lastName.toLowerCase())
+                    return 1
+                return 0
+            })
+        }
+        else if (this.state.sort === "Points") {
+            return ((a, b) => {
+                if (a.points < b.points)
+                    return 1
+                if (a.points > b.points)
+                    return -1
+                return 0
+            })
+        }
+        else {
+            return ((a, b) => 0)
+        }
+    }
+    applyFilter = (user) => {
+        const key = this.state.filter;
+
+        return user.firstName.includes(key) || user.lastName.includes(key) || user.referralCode.includes(key);
     }
 
     render() {
+        const usersList = this.state.users.filter(this.applyFilter)
+        usersList.sort(this.getSort());
+
         return (
             <div>
                 <div className="FilterSort">
-                    <select>
+                    <select onChange={e => this.setState({ sort: e.target.value })}>
                         <option value="">(Sort Results)</option>
                         <option value="FName">First Name</option>
                         <option value="LName">Last Name</option>
                         <option value="Points">Referral Points</option>
-                        <option value="">(Sort Results)</option>
                     </select>
-                    <input type="Text" placeholder="Search Results" />
+                    <input onChange={e => this.setState({ filter: e.target.value })}
+                        type="Text" placeholder="Search Results" />
                 </div>
 
 
@@ -74,7 +121,7 @@ export default class AdminDashboard extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.users.map(user => {
+                        {usersList.map(user => {
                             let index = -1;
                             if (!user.receivedAward)
                                 user.receivedAward = [false, false, false, false]
@@ -95,7 +142,7 @@ export default class AdminDashboard extends Component {
                                                         :
                                                         <button
                                                             disabled={this.ValidateReward(user.points, index)}
-                                                            onClick={() => { this.SendAWard(user.id, index) }}
+                                                            onClick={this.SendAward(user.id, index)}
                                                         >Give Award</button>
                                                 }
                                             </td>
