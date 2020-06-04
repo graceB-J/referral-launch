@@ -19,7 +19,7 @@ export default function SignInForm(props) {
           theirPoints = data[uid].points
         }
       });
-      if (referer !== "") {
+      if (referer !== "" && referer !== 0) {
         firebase.database().ref(`users/${referer}`).update({ points: theirPoints + 1 });
       }
     });
