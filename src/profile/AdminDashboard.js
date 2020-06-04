@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useDebugValue } from "react";
 
 import firebase from "firebase";
 import Table from "react-bootstrap/Table";
@@ -14,7 +14,7 @@ export default class AdminDashboard extends Component {
     }
 
     componentDidMount() {
-        firebase.database().ref("users").once("value", snapshot => {
+        firebase.database().ref("users").on("value", snapshot => {
             const keys = Object.keys(snapshot.val())
             let index = 0;
             let usersArr = []
@@ -24,11 +24,6 @@ export default class AdminDashboard extends Component {
             })
             this.setState({
                 users: usersArr
-            });
-        })
-        firebase.database().ref("users").on("value", snapshot => {
-            this.setState({
-                users: Object.values(snapshot.val())
             });
         })
     }
@@ -48,9 +43,19 @@ export default class AdminDashboard extends Component {
 
     SendAward = (userID, reward) => {
         return () => {
+            let newAwards = [false, false, false, false]
 
-            //firebase.database().ref(`users/${user}`) set rewards
-            console.log(userID, reward);
+            for (let i = 0; i < this.state.users.length; i++) {
+                console.log(this.state.users[i], userID);
+                if (this.state.users[i].id === userID)
+                    newAwards = this.state.users[i].receivedAward;
+            }
+
+            if (newAwards === undefined)
+                newAwards = [false, false, false, false]
+
+            newAwards[reward] = "Pending";
+            firebase.database().ref(`users/${userID}`).update({ receivedAward: newAwards })
         }
     }
 
@@ -138,7 +143,7 @@ export default class AdminDashboard extends Component {
                                             <td>
                                                 {
                                                     award ?
-                                                        "Received"
+                                                        award
                                                         :
                                                         <button
                                                             disabled={this.ValidateReward(user.points, index)}
