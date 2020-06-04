@@ -7,7 +7,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
 import "./SignForm.css";
-import firebaseConfig from './../firebaseConfig.js';
+import firebase from './../firebaseConfig';
 
 import EmailBlacklist from "./BLACKLIST.json";
 
@@ -22,19 +22,17 @@ export default function SignUpForm({ signUp, ...props }) {
 
   useEffect(() => {
     document.getElementById("signUpConfirmPassword").setCustomValidity(
-      password === confirm ?
-        ""
-        :
-        "Passwords Do not Match!"
+      password === confirm
+        ? ""
+        : "Passwords Do not Match!"
     );
   }, [password, confirm])
 
   useEffect(() => {
     document.getElementById("signUpEmailAddress").setCustomValidity(
-      BLACKLIST.includes(email.split("@")[1]) ?
-        "Possible Temporary Email Detected"
-        :
-        ""
+      BLACKLIST.includes(email.split("@")[1])
+        ? "Possible Temporary Email Detected"
+        : ""
     )
   }, [email])
 
@@ -48,14 +46,14 @@ export default function SignUpForm({ signUp, ...props }) {
       document.getElementById("signUpPassword").value,
       (auth) => {
         addPoints(document.getElementById("refereeCode").value);
-        firebaseConfig.database().ref(`users/${auth.user.uid}`).update(
+        firebase.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
             lastName: document.getElementById("signUpLastName").value,
             emailAddress: document.getElementById("signUpEmailAddress").value,
             referralCode: code,
             points: 0,
-            has_shared: {
+            hasShared: {
               facebook: false,
               twitter: false,
               email: false
@@ -70,7 +68,7 @@ export default function SignUpForm({ signUp, ...props }) {
 
   const GenerateReferralCode = async (fname) => {
     let name = fname.toLowerCase() + Math.floor(Math.random() * 10);
-    return await firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
+    return await firebase.database().ref(`users`).once("value").then((snapshot) => {
       const data = snapshot.val() ?? {};
       const allCodes = Object.values(data).map((userData) => userData.referralCode);
       while (allCodes.includes(name)) {
@@ -81,7 +79,7 @@ export default function SignUpForm({ signUp, ...props }) {
   }
 
   const addPoints = (referrerCode) => {
-    firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
+    firebase.database().ref(`users`).once("value").then((snapshot) => {
       const data = snapshot.val() ?? {};
       let referrer = 0;
       let theirPoints = 0;
@@ -91,7 +89,7 @@ export default function SignUpForm({ signUp, ...props }) {
           theirPoints = data[uid].points
         }
       });
-      firebaseConfig.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
+      firebase.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
     });
   }
 

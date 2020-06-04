@@ -1,6 +1,6 @@
 import React from 'react';
+
 import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from "react-router-dom";
-import { auth } from './firebaseConfig.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TopBar from "./TopBar";
@@ -11,7 +11,7 @@ import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
 
-import firebaseConfig from './firebaseConfig.js';
+import { auth } from './firebaseConfig.js';
 
 class App extends React.Component {
   constructor(props) {

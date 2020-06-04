@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
+
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
@@ -16,6 +18,8 @@ export default function TopBar({ match, user, logout }) {
           height="55"
           className="d-inline-block align-top"
         />
+      </Navbar.Brand>
+      <Navbar.Brand href="/">
         <div>ReShoes</div>
       </Navbar.Brand>
 
@@ -30,7 +34,7 @@ export default function TopBar({ match, user, logout }) {
           }
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
-          <SocialMediaButton url="www.google.com" text="Check it out!" />
+          <SocialMediaButton url="https://reshoes-app.web.app/signup" text="Check it out!" />
         </Nav>
 
         {user
