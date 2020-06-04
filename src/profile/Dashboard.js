@@ -10,28 +10,17 @@ import firebaseConfig from './../firebaseConfig.js';
 
 import MilestonesDisplay from "./MilestonesDisplay";
 
+import SocialMediaButton from '../profile/TwitterButton.js';
+
 const Dashboard = (props) => {
   const [userInfo, setUserInfo] = useState({ username: "", referralCode: "", totalReferrals: "" });
   const [users, setUsers] = useState([]);
 
-  const handleChange = (target) => {
-    setUserInfo((prev) => ({
-      ...prev,
-      [target.name]: target.value,
-    }));
-  }
-
-  const handleSubmit = (target) => {
-    const dataRef = firebaseConfig.database().ref('users');
-    const referrals = {
-      username: userInfo.username,
-      referralCode: userInfo.referralCode,
-      totalReferrals: userInfo.totalReferrals
-    }
-    dataRef.push(referrals);
-
-    setUserInfo({ username: "", referralCode: "", totalReferrals: "" });
-  }
+  // ref.on("child_changed", function (snapshot) {
+  //   var changedPost = snapshot.val();
+  //   console.log("The updated points is " + changedPost.totalReferrals);
+  //   setUserInfo(totalReferrals + 1);
+  // });
 
   useEffect(() => {
     const userRef = firebaseConfig.database().ref("users");
@@ -50,16 +39,12 @@ const Dashboard = (props) => {
     });
   }, []);
 
-  const removeUser = (itemId) => {
-    const userRef = firebaseConfig.database().ref(`/users/${itemId}`);
-    userRef.remove();
-  }
-
   return (
     <Container>
       <Jumbotron>
         <h3>Your Referral Code</h3>
         <h1>kyungjin15</h1>
+        <SocialMediaButton url={window.location.href.split("dashboard")[0].concat("signup?ref=REFERRALCODEHERE")} text="Check it out!" />
         <Button
           variant="primary"
           onClick={() => {
@@ -73,7 +58,7 @@ const Dashboard = (props) => {
       </Jumbotron>
       <Jumbotron>
         <h3>Your Points</h3>
-        <h1>3</h1>
+        {/* <h1>{firebaseConfig.database().ref('users').orderByChild('emailAddress').equalTo().child('points')}</h1> */}
         <h5>Share us on Twitter and Facebook for extra points</h5>
         <Button
           variant="primary"

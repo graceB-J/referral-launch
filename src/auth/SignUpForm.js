@@ -7,14 +7,12 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
 import "./SignForm.css";
-import firebaseConfig from './../firebaseConfig.js';
+import firebaseConfig from '../firebaseConfig.js';
 
-import EmailBlacklist from "./BLACKLIST.json";
+import { blacklist } from "./BLACKLIST.json";
 
 export default function SignUpForm({ signUp, codeGen, ...props }) {
   const query = new URLSearchParams(useLocation().search);
-
-  const BLACKLIST = EmailBlacklist.blacklist;
 
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -31,7 +29,7 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
 
   useEffect(() => {
     document.getElementById("signUpEmailAddress").setCustomValidity(
-      BLACKLIST.includes(email.split("@")[1]) ?
+      blacklist.includes(email.split("@")[1]) ?
         "Possible Temporary Email Detected"
         :
         ""
@@ -47,12 +45,14 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
       document.getElementById("signUpEmailAddress").value,
       document.getElementById("signUpPassword").value,
       (auth) => {
+
+        addPoints(document.getElementById("refereeCode").value);
+
         firebaseConfig.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
             lastName: document.getElementById("signUpLastName").value,
             emailAddress: document.getElementById("signUpEmailAddress").value,
-            refereeCode: document.getElementById("refereeCode").value,
             referralCode: code,
             points: 0,
             has_shared: {
@@ -67,6 +67,21 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
       }
     );
   };
+
+  const addPoints = (referrerCode) => {
+    firebaseConfig.database().ref(`users`).once("value").then((snapshot) => {
+      const data = snapshot.val() ?? {};
+      let referrer = 0;
+      let theirPoints = 0;
+      Object.keys(data).forEach((uid) => {
+        if (referrerCode === data.uid.referralCode) {
+          referrer = uid;
+          theirPoints = data.uid.points
+        }
+      });
+      firebaseConfig.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
+    });
+  }
 
   return (
     <div className="auth-wrapper">
@@ -108,6 +123,7 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
             <Form.Control
               id="signUpPassword"
               type="password"
+              minlength="6"
               onChange={e => setPassword(e.target.value)}
               placeholder="Password" />
           </Form.Group>
@@ -117,6 +133,7 @@ export default function SignUpForm({ signUp, codeGen, ...props }) {
             <Form.Control
               id="signUpConfirmPassword"
               type="password"
+              minlength="6"
               onChange={e => setConfirm(e.target.value)}
               placeholder="Password" />
           </Form.Group>

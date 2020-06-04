@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
-import SocialMediaButton from './profile/TwitterButton.js';
 
 export default function TopBar({ match, user, logout }) {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar id="ConsistentTopBar" bg="light" expand="lg">
       <Navbar.Brand href="/">
         <img
           alt=""
@@ -30,7 +29,6 @@ export default function TopBar({ match, user, logout }) {
           }
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
-          <SocialMediaButton url="www.google.com" text="Check it out!"/>
         </Nav>
 
         {user
@@ -40,8 +38,8 @@ export default function TopBar({ match, user, logout }) {
             id='logout'>
             Log Out
             </Button>
-          : [<Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>,
-          <Button variant="outline-success"><Link to="/signup">Sign Up</Link></Button>]}
+          : [<Button key={"SignIn"} variant="outline-success"><Link to="/signin">Sign In</Link></Button>,
+          <Button key={"SignUp"} variant="outline-success"><Link to="/signup">Sign Up</Link></Button>]}
       </Navbar.Collapse>
     </Navbar>
   );

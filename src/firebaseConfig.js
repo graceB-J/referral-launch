@@ -1,19 +1,19 @@
 import firebase from 'firebase';
 
-const config = {
-    apiKey: "AIzaSyDuIPmP3x7zV7wbB9prAegaWla-93pnwsg",
-    authDomain: "reshoes-app.firebaseapp.com",
-    databaseURL: "https://reshoes-app.firebaseio.com",
-    projectId: "reshoes-app",
-    storageBucket: "reshoes-app.appspot.com",
-    messagingSenderId: "28298377947",
-    appId: "1:28298377947:web:ae82ae18d2ecfcd4c8aafe",
-    measurementId: "G-VM6HYNECCP"
-  };
+console.log(process, process.env);
 
-  firebase.initializeApp(config);
+firebase.initializeApp({
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  databaseURL: process.env.REACT_APP_databaseURL,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId
+});
 
-  export const provider = new firebase.auth.GoogleAuthProvider();
-  export const auth = firebase.auth();
-  export default firebase;
+export const provider = new firebase.auth.GoogleAuthProvider();
+export const auth = firebase.auth();
+export default firebase;
 
