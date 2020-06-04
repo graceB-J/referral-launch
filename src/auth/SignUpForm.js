@@ -38,25 +38,28 @@ export default function SignUpForm({ signUp, ...props }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const code = await GenerateReferralCode(document.getElementById("signUpFirstName").value);
+    const userCode = await GenerateReferralCode(document.getElementById("signUpFirstName").value);
+    const referredCode = document.getElementById("refereeCode").value;
 
     signUp(
       document.getElementById("signUpEmailAddress").value,
       document.getElementById("signUpPassword").value,
       (auth) => {
-        addPoints(document.getElementById("refereeCode").value);
+        addPoints(referredCode);
         firebase.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
             lastName: document.getElementById("signUpLastName").value,
             emailAddress: document.getElementById("signUpEmailAddress").value,
-            referralCode: code,
+            referralCode: userCode,
             points: 0,
+            admin: referredCode === "AdminCode10",
             hasShared: {
               facebook: false,
               twitter: false,
               email: false
-            }
+            },
+            receivedAward: [false, false, false, false]
           }
         );
 
