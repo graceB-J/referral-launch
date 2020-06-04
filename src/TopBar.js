@@ -30,7 +30,7 @@ export default function TopBar({ match, user, logout }) {
           }
           <Nav.Link href="/about">About</Nav.Link>
           <Nav.Link href="/faq">FAQ</Nav.Link>
-          <SocialMediaButton url="www.google.com" text="Check it out!"/>
+          <SocialMediaButton url="www.google.com" text="Check it out!" />
         </Nav>
 
         {user
@@ -40,8 +40,8 @@ export default function TopBar({ match, user, logout }) {
             id='logout'>
             Log Out
             </Button>
-          : [<Button variant="outline-success"><Link to="/signin">Sign In</Link></Button>,
-          <Button variant="outline-success"><Link to="/signup">Sign Up</Link></Button>]}
+          : [<Button key={"SignIn"} variant="outline-success"><Link to="/signin">Sign In</Link></Button>,
+          <Button key={"SignUp"} variant="outline-success"><Link to="/signup">Sign Up</Link></Button>]}
       </Navbar.Collapse>
     </Navbar>
   );
