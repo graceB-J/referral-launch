@@ -78,7 +78,7 @@ export default function SignUpForm({ signUp, ...props }) {
   const addPoints = (referrerCode) => {
     firebase.database().ref(`users`).once("value").then((snapshot) => {
       const data = snapshot.val() ?? {};
-      let referrer = 0;
+      let referrer = "";
       let theirPoints = 0;
       Object.keys(data).forEach((uid) => {
         if (referrerCode === data[uid].referralCode) {
@@ -86,7 +86,7 @@ export default function SignUpForm({ signUp, ...props }) {
           theirPoints = data[uid].points
         }
       });
-      if (referrer !== 0) {
+      if (referrer !== "") {
         firebase.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
       }
     });
