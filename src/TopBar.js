@@ -6,6 +6,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 
+import SocialMediaButton from "./profile/TwitterButton";
+
 export default function TopBar({ match, user, logout }) {
   return (
     <Navbar id="ConsistentTopBar" bg="light" expand="lg">

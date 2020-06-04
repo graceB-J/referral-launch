@@ -14,7 +14,6 @@ const SocialMediaButton = (props) => (
         size={35}
         round />
     </TwitterShareButton>
-
     <FacebookShareButton
       className="socialButton"
       url={props.url}

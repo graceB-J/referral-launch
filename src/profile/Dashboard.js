@@ -27,6 +27,9 @@ const Dashboard = ({user}) => {
       <Jumbotron>
         <h3>Your Referral Code</h3>
         <h1>{userInfo.referralCode}</h1>
+        <SocialMediaButton
+          url={window.location.href.split("dashboard")[0].concat(`signup?ref=${userInfo.referralCode}`)}
+          text="Check it out!" />
         <Button
           variant="primary"
           onClick={() => {
@@ -42,7 +45,6 @@ const Dashboard = ({user}) => {
         <h3>Your Points</h3>
         <h1>{userInfo.points + Object.values(hasShared).reduce((a, b) => (a + b), 0)}</h1>
         <h5>Share us on Twitter and Facebook for extra points</h5>
-        <SocialMediaButton url="https://reshoes-app.web.app/signup" text="Check it out!" />
       </Jumbotron>
       <MilestonesDisplay />
     </Container>
