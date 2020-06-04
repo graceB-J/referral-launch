@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import Container from "react-bootstrap/Container"
 import Jumbotron from "react-bootstrap/Jumbotron"
 import Button from "react-bootstrap/Button"
+import Alert from "react-bootstrap/Alert"
 
 import { FaTwitter, FaFacebookF } from 'react-icons/fa';
 
 import "./Dashboard.css";
-import firebase from './../firebaseConfig';
+import firebase, {auth} from './../firebaseConfig';
 import MilestonesDisplay from "./MilestonesDisplay";
 import SocialMediaButton from './TwitterButton.js';
 
@@ -25,6 +26,10 @@ const Dashboard = ({user}) => {
 
   return (
     <Container>
+      {auth.currentUser.emailVerified &&
+        <Alert variant="danger">
+          Your email is not emailVerified
+        </Alert>}
       <Jumbotron className="dashboard-box">
         <h3>Your Referral Code</h3>
         <h2 className="dash-beeg-display">{userInfo.referralCode}</h2>

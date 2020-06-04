@@ -13,7 +13,7 @@ import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
 
-import { auth } from './firebaseConfig.js';
+import firebase, { auth } from './firebaseConfig.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +43,15 @@ class App extends React.Component {
 
   signUp = (email, password, callback) => {
     auth.createUserWithEmailAndPassword(email, password)
-      .then(user => callback(user))
+      .then((auth) => callback(auth))
+      .then((auth) => {
+        return this.doSendEmailVerification(auth.user);
+      })
+  }
+
+  doSendEmailVerification = (user) => {
+    console.log("sending email");
+    user.sendEmailVerification();
   }
 
   signIn = (email, password, callback) => {

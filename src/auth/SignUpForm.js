@@ -59,6 +59,7 @@ export default function SignUpForm({ signUp, ...props }) {
           }
         );
         props.history.replace("/signup", "/dashboard");
+        return auth;
       }
     );
   };
