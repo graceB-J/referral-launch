@@ -12,6 +12,7 @@ import FAQ from "./about/FAQ.js";
 import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
+import Footer from "./Footer.js";
 
 import firebase, { auth } from './firebaseConfig.js';
 
@@ -87,7 +88,17 @@ class App extends React.Component {
           />
           <Route exact path="/" component={Landing} />
         </Switch>
+
+
+
+        <footer class="page-footer font-small mdb-color lighten-3 pt-4" user={this.state.user} logout={this.logout} >
+          
+          <Footer> user={this.state.user} </Footer>
+        </footer>
+
       </Router>
+
+      
     )
   }
 }
