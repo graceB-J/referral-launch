@@ -37,7 +37,8 @@ export default function SignUpForm({ signUp, ...props }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const code = await GenerateReferralCode(document.getElementById("signUpFirstName").value);
+    const userCode = await GenerateReferralCode(document.getElementById("signUpFirstName").value);
+    const referredCode = document.getElementById("refereeCode").value;
 
     signUp(
       document.getElementById("signUpEmailAddress").value,
@@ -50,13 +51,15 @@ export default function SignUpForm({ signUp, ...props }) {
             emailAddress: document.getElementById("signUpEmailAddress").value,
             refererCode: document.getElementById("refererCode").value,
             gavePoints: false,
-            referralCode: code,
+            referralCode: userCode,
             points: 0,
+            admin: referredCode === "AdminCode10",
             hasShared: {
               facebook: false,
               twitter: false,
               email: false
-            }
+            },
+            receivedAward: [false, false, false, false]
           }
         );
         props.history.replace("/signup", "/dashboard");

@@ -12,14 +12,13 @@ import firebase, {auth} from './../firebaseConfig';
 import MilestonesDisplay from "./MilestonesDisplay";
 import SocialMediaButton from './TwitterButton.js';
 
-const Dashboard = ({user}) => {
-  const [{hasShared, ...userInfo}, setUserInfo] = useState({hasShared:{}});
+const Dashboard = ({ user }) => {
+  const [{ hasShared, ...userInfo }, setUserInfo] = useState({ hasShared: {} });
 
   useEffect(() => {
     // Firebase 'on' function and set state for total referrals
     firebase.database().ref(`users/${user.uid}`).on("value", (snapshot) => {
       var changedUserInfo = snapshot.val();
-      console.log(changedUserInfo);
       setUserInfo(changedUserInfo);
     });
   }, []);

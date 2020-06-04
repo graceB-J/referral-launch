@@ -12,6 +12,7 @@ import FAQ from "./about/FAQ.js";
 import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
+import AdminDashboard from "./profile/AdminDashboard.js";
 
 import firebase, { auth } from './firebaseConfig.js';
 
@@ -19,19 +20,25 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
+      admin: false
     }
   }
 
   componentDidMount = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.setState({
-          user: user
-        });
-      } else {
+        firebase.database().ref(`users/${user.uid}`).once("value", snapshot => {
+          this.setState({
+            user: user,
+            admin: snapshot.val().admin
+          });
+        })
+      }
+      else {
         this.setState({
           user: null,
+          admin: false
         });
       }
     })
@@ -66,7 +73,7 @@ class App extends React.Component {
         <Switch>
           <Route
             exact path="/signin"
-            render={props => this.state.user 
+            render={props => this.state.user
               ? <Redirect {...props} to={{ pathname: "/dashboard" }} />
               : <SignInForm {...props} signIn={this.signIn} />}
           />
@@ -80,10 +87,15 @@ class App extends React.Component {
           <Route exact path="/faq" component={FAQ} />
           <Route
             exact path="/dashboard"
-            render={props => this.state.user
-              ? <Dashboard {...props} user={this.state.user} />
-              : <Redirect {...props} to={{ pathname: "/signin" }} />
-            }
+            render={props => {
+              return this.state.user ?
+                this.state.admin ?
+                  <AdminDashboard {...props} />
+                  :
+                  <Dashboard {...props} user={this.state.user} />
+                :
+                <Redirect {...props} to={{ pathname: "/signin" }} />
+            }}
           />
           <Route exact path="/" component={Landing} />
         </Switch>
