@@ -9,7 +9,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 import { FaTwitter, FaFacebookF } from 'react-icons/fa';
 
-import firebase from './../firebaseConfig';
+import "./Dashboard.css";
+import firebase, {auth} from './../firebaseConfig';
 import MilestonesDisplay from "./MilestonesDisplay";
 import SocialMediaButton from './TwitterButton.js';
 
@@ -25,9 +26,15 @@ const Dashboard = ({ user }) => {
 
   return (
     <Container>
-      <Jumbotron>
+      {!auth.currentUser.emailVerified &&
+        <Alert variant="danger">
+          Your email is not emailVerified
+        </Alert>}
+      <Jumbotron className="dashboard-box">
         <h3>Your Referral Code</h3>
-        <h1>{userInfo.referralCode}</h1>
+        <h2 className="dash-beeg-display">{userInfo.referralCode}</h2>
+        <h5 className="pls-share">If people, sign up with your referral code, you get rewarded!</h5>
+        <h5 className="pls-share">Share your code via. Twitter, Facebook, or Link</h5>
         <SocialMediaButton
           url={window.location.href.split("dashboard")[0].concat(`signup?ref=${userInfo.referralCode}`)}
           text="Check it out!" />
@@ -38,15 +45,16 @@ const Dashboard = ({ user }) => {
             const referralLink = url[0].concat(`signup?ref=${userInfo.referralCode}`);
             navigator.clipboard.writeText(referralLink);
           }}
+          style={{marginTop: "5px"}}
         >
           copy a link to send to your friends!
         </Button>
       </Jumbotron>
-      <Jumbotron>
-        <h3>Your Points</h3>
+      <Jumbotron className="dashboard-box">
         {userInfo && userInfo.hasShared &&
-          <h1>{userInfo.points + Object.values(userInfo.hasShared).reduce((a, b) => (a + b), 0)}</h1>}
-        <h5>Share us on Twitter and Facebook for extra points</h5>
+          <h2 className="dash-beeg-display">{userInfo.points + Object.values(hasShared).reduce((a, b) => (a + b), 0)}</h2>}
+        <h3>Your Points</h3>
+        <h5 className="pls-share">Share us on Twitter and Facebook for extra points</h5>
       </Jumbotron>
 
       {userInfo.address === "" && userInfo.points >= "25" &&
@@ -74,7 +82,9 @@ const Dashboard = ({ user }) => {
           </div>
         </Alert>}
 
-      <MilestonesDisplay />
+      <Jumbotron className="dashboard-box">
+        <MilestonesDisplay />
+      </Jumbotron>
     </Container>
   )
 }

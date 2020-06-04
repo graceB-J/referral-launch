@@ -6,7 +6,7 @@ function Landing({ match }) {
     <div className="landing">
       <img src="/landing.png" alt="Reshoes. shoes rethought, shoes reused" width="100%" />
       <img src="/comingsoon.png" alt="Coming Soon" width="100%" />
-      <h3>
+      <h3 className="lander-info">
         <a href="/signup" >Sign Up.</a>
         {" "}Share with Friends. Get Rewards.
       </h3>

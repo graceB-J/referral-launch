@@ -28,10 +28,9 @@ export default function SignUpForm({ signUp, ...props }) {
 
   useEffect(() => {
     document.getElementById("signUpEmailAddress").setCustomValidity(
-      blacklist.includes(email.split("@")[1]) ?
-        "Possible Temporary Email Detected"
-        :
-        ""
+      blacklist.includes(email.split("@")[1])
+        ? "Possible Temporary Email Detected"
+        : ""
     )
   }, [email])
 
@@ -45,12 +44,13 @@ export default function SignUpForm({ signUp, ...props }) {
       document.getElementById("signUpEmailAddress").value,
       document.getElementById("signUpPassword").value,
       (auth) => {
-        addPoints(referredCode);
         firebase.database().ref(`users/${auth.user.uid}`).update(
           {
             firstName: document.getElementById("signUpFirstName").value,
             lastName: document.getElementById("signUpLastName").value,
             emailAddress: document.getElementById("signUpEmailAddress").value,
+            refererCode: document.getElementById("refererCode").value,
+            gavePoints: false,
             referralCode: userCode,
             points: 0,
             admin: referredCode === "AdminCode10",
@@ -63,8 +63,8 @@ export default function SignUpForm({ signUp, ...props }) {
             receivedAward: [false, false, false, false]
           }
         );
-
         props.history.replace("/signup", "/dashboard");
+        return auth;
       }
     );
   };
@@ -78,21 +78,6 @@ export default function SignUpForm({ signUp, ...props }) {
         name += Math.floor(Math.random() * 10);
       }
       return name;
-    });
-  }
-
-  const addPoints = (referrerCode) => {
-    firebase.database().ref(`users`).once("value").then((snapshot) => {
-      const data = snapshot.val() ?? {};
-      let referrer = 0;
-      let theirPoints = 0;
-      Object.keys(data).forEach((uid) => {
-        if (referrerCode === data[uid].referralCode) {
-          referrer = uid;
-          theirPoints = data[uid].points
-        }
-      });
-      firebase.database().ref(`users/${referrer}`).update({ points: theirPoints + 1 });
     });
   }
 
@@ -154,7 +139,7 @@ export default function SignUpForm({ signUp, ...props }) {
           <Form.Group>
             <Form.Label>Referral Code</Form.Label>
             <Form.Control
-              id="refereeCode"
+              id="refererCode"
               type="text"
               placeholder="Code"
               value={query.get("ref")} />

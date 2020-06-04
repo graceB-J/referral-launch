@@ -3,13 +3,16 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import "./App.css"
 import TopBar from "./TopBar";
-import Landing from './Landing.js';
+import Landing from './about/Landing.js';
 import About from "./about/About.js";
 import FAQ from "./about/FAQ.js";
 import SignInForm from "./auth/SignInForm.js";
 import SignUpForm from "./auth/SignUpForm.js";
 import Dashboard from './profile/Dashboard.js';
+import Footer from "./Footer.js";
 import AdminDashboard from "./profile/AdminDashboard.js";
 
 import firebase, { auth } from './firebaseConfig.js';
@@ -48,7 +51,15 @@ class App extends React.Component {
 
   signUp = (email, password, callback) => {
     auth.createUserWithEmailAndPassword(email, password)
-      .then(user => callback(user))
+      .then((auth) => callback(auth))
+      .then((auth) => {
+        return this.doSendEmailVerification(auth.user);
+      })
+  }
+
+  doSendEmailVerification = (user) => {
+    console.log("sending email");
+    user.sendEmailVerification();
   }
 
   signIn = (email, password, callback) => {
@@ -89,7 +100,17 @@ class App extends React.Component {
           />
           <Route exact path="/" component={Landing} />
         </Switch>
+
+
+
+        <footer class="page-footer font-small mdb-color lighten-3 pt-4" user={this.state.user} logout={this.logout} >
+          
+          <Footer> user={this.state.user} </Footer>
+        </footer>
+
       </Router>
+
+      
     )
   }
 }
