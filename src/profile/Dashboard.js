@@ -10,7 +10,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { FaTwitter, FaFacebookF } from 'react-icons/fa';
 
 import "./Dashboard.css";
-import firebase, {auth} from './../firebaseConfig';
+import firebase, { auth } from './../firebaseConfig';
 import MilestonesDisplay from "./MilestonesDisplay";
 import SocialMediaButton from './TwitterButton.js';
 
@@ -28,7 +28,7 @@ const Dashboard = ({ user }) => {
     <Container>
       {!auth.currentUser.emailVerified &&
         <Alert variant="danger">
-          Your email is not emailVerified
+          Your email is not verified!
         </Alert>}
       <Jumbotron className="dashboard-box">
         <h3>Your Referral Code</h3>
@@ -45,14 +45,14 @@ const Dashboard = ({ user }) => {
             const referralLink = url[0].concat(`signup?ref=${userInfo.referralCode}`);
             navigator.clipboard.writeText(referralLink);
           }}
-          style={{marginTop: "5px"}}
+          style={{ marginTop: "5px" }}
         >
           copy a link to send to your friends!
         </Button>
       </Jumbotron>
       <Jumbotron className="dashboard-box">
         {userInfo && userInfo.hasShared &&
-          <h2 className="dash-beeg-display">{userInfo.points + Object.values(hasShared).reduce((a, b) => (a + b), 0)}</h2>}
+          <h2 className="dash-beeg-display">{userInfo.points + Object.values(userInfo.hasShared).reduce((a, b) => (a + b), 0)}</h2>}
         <h3>Your Points</h3>
         <h5 className="pls-share">Share us on Twitter and Facebook for extra points</h5>
       </Jumbotron>

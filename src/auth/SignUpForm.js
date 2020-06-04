@@ -38,7 +38,7 @@ export default function SignUpForm({ signUp, ...props }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userCode = await GenerateReferralCode(document.getElementById("signUpFirstName").value);
-    const referredCode = document.getElementById("refereeCode").value;
+    const referredCode = document.getElementById("refererCode").value;
 
     signUp(
       document.getElementById("signUpEmailAddress").value,
