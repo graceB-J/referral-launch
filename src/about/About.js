@@ -14,8 +14,8 @@ function About({ match }) {
 
         <h3 className="ourFoundersTitle"> Our Founders </h3>
         <div className="founderphotos">
-          <img className="annie" src="/image.png" alt="annie-founder" width="17%" />
-          <img className="annie" src="/image.png" alt="camille-founder" width="17%" />
+          <img className="annie" src="/annie-circle.png" alt="annie-founder" width="17%" />
+          <img className="annie" src="/camille-circle.png" alt="camille-founder" width="17%" />
         </div>
         <p>Annie and Camille were working in corporate America when they went shopping for shoes and realized that no one was valuing sustainability and positive global impact: everyone else making shoes was worried about turning a profit. They decided to quit their desk jobs to solve this problem once and for all. Since then, they’ve worked with dozens of designers and dozens of manufacturers to find the perfect balance between creating quality designer shoes and environmentally friendly production methods. In addition to this, they want to give back to their communities through this company by donating as many shoes as they can.</p>
       </div>
