@@ -1,18 +1,9 @@
+.das-footer {
+  padding: 20px 50px 50px 50px;
+  background-color: white;
+}
 
-footer {
-    text-align: center;
-    padding: 30px;
-    background-color: white;
-    
-  }
-  
-  .home {
-    color: #ffde59;
-    /* ffde59 is our logo yellow */
-  }
-
-  content{
-    color: #ffde59;
-    display: flex; 
-  }
- 
+.footer-links {
+  display: flex;
+  flex-flow: row nowrap;
+}
